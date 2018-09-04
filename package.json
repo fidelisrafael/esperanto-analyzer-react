@@ -1,0 +1,33 @@
+{
+  "name": "esperanto-analyzer-react",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@atlaskit/badge": "latest",
+    "@atlaskit/blanket": "latest",
+    "@atlaskit/button": "latest",
+    "@atlaskit/css-reset": "latest",
+    "@atlaskit/empty-state": "^3.0.7",
+    "@atlaskit/feedback-collector": "^0.1.2",
+    "@atlaskit/field-text-area": "^4.0.9",
+    "@atlaskit/form": "^4.0.1",
+    "@atlaskit/icon": "^13.8.0",
+    "@atlaskit/inline-message": "^7.0.4",
+    "@atlaskit/modal-dialog": "^6.0.12",
+    "@atlaskit/nps": "^4.0.6",
+    "@atlaskit/page": "^8.0.5",
+    "@atlaskit/page-header": "^6.0.5",
+    "@atlaskit/tag": "^6.0.7",
+    "@atlaskit/toggle": "^5.0.8",
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2",
+    "react-scripts": "1.1.5",
+    "styled-components": "^3.4.5"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}

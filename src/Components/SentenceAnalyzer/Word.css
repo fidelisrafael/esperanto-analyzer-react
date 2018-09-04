@@ -1,0 +1,8 @@
+.word {
+  padding: 5px;
+  color: ;
+}
+
+.word.noun {
+  background: red;
+}

@@ -1,0 +1,29 @@
+.sentence-wrapper {
+  width: 75%;
+  margin: 25px auto;
+  background: #fff9eb66;
+  padding: 10px 20px;
+  border-radius: 10px;
+}
+
+.sentence-wrapper h1 {
+  text-align: center;
+}
+
+.sentence-wrapper fieldset {
+  display: block;
+  margin-bottom: 15px;
+}
+
+.sentence-wrapper fieldset label + div {
+  display: block;
+}
+
+.no-analyzes-results {
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.sentence-analyze-result-wrapper {
+  margin: 20px 0;
+}
