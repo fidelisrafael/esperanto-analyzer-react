@@ -1,20 +1,8 @@
 import React, { Component } from 'react';
-import FieldTextArea, { FieldTextAreaStateless } from '@atlaskit/field-text-area';
-import Button from '@atlaskit/button';
-import { Toggle, ToggleStateless } from '@atlaskit/toggle';
-import QuoteIcon from '@atlaskit/icon/glyph/quote';
+import { ToggleStateless } from '@atlaskit/toggle';
 import QueuesIcon from '@atlaskit/icon/glyph/queues';
-import MediaServicesTextIcon from '@atlaskit/icon/glyph/media-services/text';
 import EditFilledIcon from '@atlaskit/icon/glyph/edit-filled';
 import SearchIcon from '@atlaskit/icon/glyph/search';
-
-import Form, {
-  Field,
-  FieldGroup,
-  FormHeader,
-  FormSection,
-  FormFooter,
-} from '@atlaskit/form';
 
 import PageHeader from '@atlaskit/page-header'
 
@@ -34,12 +22,13 @@ class SentenceAnalyzer extends Component {
     this.state = {
       analyzes_result: [],
       sentence: '',
+      requestSent: false,
       isEditing: true
     }
 
     this.handleSentenceChange = this.handleSentenceChange.bind(this)
     this.requestSentenceAnalyze = this.requestSentenceAnalyze.bind(this)
-    this.activatedEditing = this.activatedEditing.bind(this)
+    this.activateEditing = this.activateEditing.bind(this)
     this.setSampleSentence = this.setSampleSentence.bind(this)
 	}
 
@@ -53,7 +42,7 @@ class SentenceAnalyzer extends Component {
     this.setState({sentence: event.target.value});
   }
 
-  activatedEditing(value) {
+  activateEditing(value) {
     this.setState({ isEditing: !this.state.isEditing })
   }
 
@@ -64,11 +53,21 @@ class SentenceAnalyzer extends Component {
     API.analyzeSentence(sentence).then((response) => {
       return response.json()
     }).then((json) => {
-      self.setState({ analyzes_result: json, isEditing: false })
+      self.setState({ analyzes_result: json, isEditing: false, requestSent: true })
     })
   }
 
+  toggleIsDisabled() {
+    return (!this.hasMinimumSentence() || !this.state.requestSent)
+  }
+
+  hasMinimumSentence() {
+    return this.state.sentence && this.state.sentence.length >= 2
+  }
+
 	render() {
+    const { isEditing } = this.state
+
 		return (
 
       <div className='sentence-wrapper'>
@@ -86,23 +85,27 @@ class SentenceAnalyzer extends Component {
           <ToggleStateless
             label="Change Visualization"
             size="large"
-            onChange={this.activatedEditing}
-            isChecked={this.state.isEditing}
+            onChange={this.activateEditing}
+            isChecked={isEditing}
+            isDisabled={this.toggleIsDisabled()}
+            isDefaultChecked={isEditing}
           />
           <span>
-            {this.state.isEditing && <span><EditFilledIcon /> Write Mode</span>}
-            {!this.state.isEditing && <span>&nbsp;<SearchIcon /> Inspection Mode</span>}
+            {isEditing && <span><EditFilledIcon /> Write Mode</span>}
+            {!isEditing && <span>&nbsp;<SearchIcon /> Inspection Mode</span>}
           </span>
         </div>
 
-        {this.state.isEditing && <SentenceTextArea
+        {isEditing && <SentenceTextArea
           sentence={this.state.sentence}
           onSubmit={this.requestSentenceAnalyze}
           onChange={this.handleSentenceChange}
+          canSubmit={this.hasMinimumSentence()}
         />}
 
-        {!this.state.isEditing &&
+        {!isEditing &&
           <SentenceAnalyzeResult
+            onBackClick={this.activateEditing}
             result={this.state.analyzes_result}
         />}
       </div>

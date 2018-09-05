@@ -26,4 +26,19 @@
 
 .sentence-analyze-result-wrapper {
   margin: 20px 0;
+  border-top: 2px solid #e4dcca66;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.no-analyzes-results .back-btn {
+  margin-top: 50px;
+}
+
+.sentence-analyze-result-wrapper .back-btn {
+  margin-top: 50px;
+}
+
+.sentence-analyze-result-wrapper .words-list > span span {
+  padding: 4px 6px;
 }

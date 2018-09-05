@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 const DEFAULT_RIBBON_IMG = "https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"
 const DEFAULT_STYLE = {

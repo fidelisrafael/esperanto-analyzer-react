@@ -1,27 +1,26 @@
 import React, { Component } from 'react';
-import FieldTextArea, { FieldTextAreaStateless } from '@atlaskit/field-text-area';
+import FieldTextAreaStateless from '@atlaskit/field-text-area';
 import Button from '@atlaskit/button';
 
 import MediaServicesTextIcon from '@atlaskit/icon/glyph/media-services/text';
 
-import Form, {
-  Field,
-  FieldGroup,
-  FormHeader,
-  FormSection,
-  FormFooter,
-} from '@atlaskit/form';
 
 class SentenceTextArea extends Component {
   render() {
+    const {
+      canSubmit, sentence,
+      onChange, onSubmit,
+      buttonText
+    } = this.props
+
     return (
       <div>
         <fieldset>
           <FieldTextAreaStateless
               autoFocus
-              value={this.props.sentence}
+              value={sentence}
               label={<span><MediaServicesTextIcon size='small'/> Text in Esperanto</span>}
-              onChange={this.props.onChange}
+              onChange={onChange}
               required
               minimumRows={15}
               maxLength={2048}
@@ -29,12 +28,12 @@ class SentenceTextArea extends Component {
         </fieldset>
         <fieldset>
           <Button
-            onClick={this.props.onSubmit}
+            onClick={onSubmit}
             type="submit"
             appearance="primary"
-            isDisabled={!this.props.sentence || this.props.sentence.length < 2}
+            isDisabled={!canSubmit}
           >
-            {this.props.buttonText || 'Analyze'}
+            {buttonText || 'Analyze'}
           </Button>
         </fieldset>
       </div>
