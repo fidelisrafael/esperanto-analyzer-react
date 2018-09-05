@@ -6,14 +6,29 @@ import SearchIcon from '@atlaskit/icon/glyph/search';
 
 import PageHeader from '@atlaskit/page-header'
 
-import './SentenceAnalyzer.css'
-
 import SentenceAnalyzeResult from './SentenceAnalyzeResult'
 import SentenceTextArea from './SentenceTextArea'
 
 import API from '../../Lib/API'
 
 const SAMPLE_SENTENCE = 'Antaŭ la alveno de portugaloj, multaj homoj loĝis tie kie hodiaŭ estas Brazilo.'
+const styles = {
+  sentenceWrapper: {
+    width: '75%',
+    margin: '25px auto',
+    background: '#fff9eb66',
+    padding: '10px 20px',
+    borderRadius: '10px',
+    h1: {
+      textAlign: 'center'
+    }
+  },
+
+  bottomBar: {
+    textDecoration: 'underline',
+    cursor: 'pointer'
+  }
+}
 
 class SentenceAnalyzer extends Component {
 	constructor() {
@@ -72,16 +87,15 @@ class SentenceAnalyzer extends Component {
     const { isEditing } = this.state
 
 		return (
-
-      <div className='sentence-wrapper'>
+      <div style={styles.sentenceWrapper} className='sentenceWrapper'>
         <PageHeader
-          bottomBar={
+          bottomBar ={
             <span>
               Type any text in Esperanto in the field below and click in the button 'Analyze' to perform a simple morphological analyses on it. <br />
-              You can click <span onClick={this.setSampleSentence} style={ { 'text-decoration': 'underline', 'cursor': 'pointer' } }>here</span> to try a sample text.
+              You can click <span onClick={this.setSampleSentence} style={styles.bottomBar}>here</span> to try a sample text.
             </span>}
         >
-          <QueuesIcon /> Esperanto Sentence Analyzer
+          <span style={styles.sentenceWrapper.h1}><QueuesIcon /> Esperanto Sentence Analyzer</span>
         </PageHeader>
 
         <div>
