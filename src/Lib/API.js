@@ -1,5 +1,5 @@
-const API_HOST = '127.0.0.1:5000'
-const API_PROTOCOL = 'http'
+const API_HOST = process.env.API_HOST || '127.0.0.1:5000'
+const API_PROTOCOL = process.env.API_PROTOCOL || 'http'
 const ANALYZE_ENDPOINT = '/analyze?sentence=:sentence'
 const API_URL =  `${API_PROTOCOL}://${API_HOST}`
 
