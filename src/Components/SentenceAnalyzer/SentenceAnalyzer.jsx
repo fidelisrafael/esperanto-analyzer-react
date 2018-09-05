@@ -33,9 +33,7 @@ class SentenceAnalyzer extends Component {
 	}
 
   setSampleSentence(event) {
-    event.preventDefault()
-
-    this.setState({ sentence: SAMPLE_SENTENCE })
+    this.setState({ sentence: SAMPLE_SENTENCE }, () => (this.requestSentenceAnalyze()))
   }
 
   handleSentenceChange(event) {
