@@ -33,6 +33,11 @@ class SentenceAnalyzer extends Component {
 	}
 
   setSampleSentence(event) {
+    // Already visualizing test sentence results
+    if((this.state.sentence == SAMPLE_SENTENCE) && !this.state.isEditing) {
+      return false
+    }
+
     this.setState({ sentence: SAMPLE_SENTENCE }, () => (this.requestSentenceAnalyze()))
   }
 
