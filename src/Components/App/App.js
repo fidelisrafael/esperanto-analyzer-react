@@ -5,11 +5,13 @@ import './App.css';
 import Page from '@atlaskit/page';
 
 import SentenceAnalyzer from '../SentenceAnalyzer/SentenceAnalyzer'
+import GithubRibbon from '../GithubRibbon/GithubRibbon'
 
 class App extends Component {
   render() {
     return (
-      <Page>
+      <Page className='app-wrapper'>
+        <GithubRibbon href='https://github.com/fidelisrafael/esperanto-analyzer' />
         <SentenceAnalyzer />
       </Page>
     );
