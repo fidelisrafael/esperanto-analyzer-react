@@ -11,7 +11,7 @@ class App extends Component {
   render() {
     return (
       <Page className='app-wrapper'>
-        <GithubRibbon href='https://github.com/fidelisrafael/esperanto-analyzer' />
+        <GithubRibbon href='https://github.com/fidelisrafael/esperanto-analyzer-react/' />
         <SentenceAnalyzer />
       </Page>
     );
