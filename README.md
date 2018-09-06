@@ -6,7 +6,7 @@ This React application is the front-end for the Pythonlibrary [esperanto-analyze
 
 You can try the demo at: https://fidelisrafael.github.io/esperanto-analyzer-react/
 
-![Visualization](./public/esperanto_analyzer_screenshot.png)
+![Frontend application](./public/esperanto_analyzer_screenshot.png)
 
 ---
 
