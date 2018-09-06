@@ -2,7 +2,7 @@
   "name": "esperanto-analyzer-react",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://fidelisrafael.github.io/esperanto-analyzer-react",
+  "homepage": "http://esperanto.fidelis.work",
   "dependencies": {
     "@atlaskit/badge": "latest",
     "@atlaskit/blanket": "latest",
