@@ -2,7 +2,9 @@
 
 ## About
 
-This React application is the front-end for the library [https://github.com/fidelisrafael/esperanto-analyzer](https://github.com/fidelisrafael/esperanto-analyzer).
+This React application is the front-end for the Pythonlibrary [esperanto-analyzer](https://github.com/fidelisrafael/esperanto-analyzer).
+
+You can try the demo at: https://fidelisrafael.github.io/esperanto-analyzer-react/
 
 ![Visualization](./public/esperanto_analyzer_screenshot.png)
 
