@@ -5,9 +5,6 @@ import InlineDialog from '@atlaskit/inline-dialog';
 const styles = {
   word: {
     padding: '5px',
-  },
-  span: {
-    padding: '4px 6px'
   }
 }
 
@@ -54,7 +51,7 @@ class Word extends Component {
           onClick={() => {
             this.setState({dialogIsOpen: !this.state.dialogIsOpen})
           }}
-          style={styles.span}
+          className='wordSpan'
         >
           <Tag
             text={content}

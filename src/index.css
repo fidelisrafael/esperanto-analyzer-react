@@ -11,3 +11,7 @@ body {
 .sentenceWrapper fieldset label + div {
   display: block;
 }
+
+.wordSpan span {
+  padding: 4px 6px;
+}
