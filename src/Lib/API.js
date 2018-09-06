@@ -1,5 +1,10 @@
-const API_HOST = '127.0.0.1:5000'
-const API_PROTOCOL = 'http'
+import config from '../Config'
+
+const currentConfig = config[process.env.NODE_ENV || 'development']
+
+const API_HOST = currentConfig.api_host
+const API_PROTOCOL = currentConfig.api_protocol
+
 const ANALYZE_ENDPOINT = '/analyze?sentence=:sentence'
 const API_URL =  `${API_PROTOCOL}://${API_HOST}`
 

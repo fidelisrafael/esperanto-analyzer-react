@@ -4,6 +4,13 @@ import Button from '@atlaskit/button';
 
 import MediaServicesTextIcon from '@atlaskit/icon/glyph/media-services/text';
 
+const styles = {
+  fieldset: {
+    display: 'block',
+    marginBottom: '15px'
+  }
+}
+
 
 class SentenceTextArea extends Component {
   render() {
@@ -15,7 +22,7 @@ class SentenceTextArea extends Component {
 
     return (
       <div>
-        <fieldset>
+        <fieldset style={styles.fieldset}>
           <FieldTextAreaStateless
               autoFocus
               value={sentence}

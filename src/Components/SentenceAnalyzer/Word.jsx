@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 import Tag from '@atlaskit/tag';
 import InlineDialog from '@atlaskit/inline-dialog';
 
-import './Word.css'
+const styles = {
+  word: {
+    padding: '5px',
+  }
+}
 
 const COLOR_BY_GRAMMAR_CLASS = {
   'adjective': 'green',
@@ -47,11 +51,12 @@ class Word extends Component {
           onClick={() => {
             this.setState({dialogIsOpen: !this.state.dialogIsOpen})
           }}
+          className='wordSpan'
         >
           <Tag
             text={content}
             color={COLOR_BY_GRAMMAR_CLASS[grammarClass.toLowerCase()] || 'standard'}
-            className={`word word-${grammarClass.toLowerCase()}`}
+            style={styles.word}
           />
         </span>
       </InlineDialog>

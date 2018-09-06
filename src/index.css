@@ -3,3 +3,15 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+.sentenceWrapper h1 {
+  text-align: center;
+}
+
+.sentenceWrapper fieldset label + div {
+  display: block;
+}
+
+.wordSpan span {
+  padding: 4px 6px;
+}

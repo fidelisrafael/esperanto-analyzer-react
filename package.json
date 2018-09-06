@@ -2,6 +2,7 @@
   "name": "esperanto-analyzer-react",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://fidelisrafael.github.io/esperanto-analyzer-react",
   "dependencies": {
     "@atlaskit/badge": "latest",
     "@atlaskit/blanket": "latest",
@@ -19,12 +20,15 @@
     "@atlaskit/page-header": "^6.0.5",
     "@atlaskit/tag": "^6.0.7",
     "@atlaskit/toggle": "^5.0.8",
+    "gh-pages": "^1.2.0",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
     "react-scripts": "1.1.5",
     "styled-components": "^3.4.5"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
