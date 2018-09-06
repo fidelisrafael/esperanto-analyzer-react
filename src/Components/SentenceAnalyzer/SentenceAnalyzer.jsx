@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { ToggleStateless } from '@atlaskit/toggle';
+import ToggleStateless from '@atlaskit/toggle';
+import Spinner from '@atlaskit/spinner';
 import QueuesIcon from '@atlaskit/icon/glyph/queues';
 import EditFilledIcon from '@atlaskit/icon/glyph/edit-filled';
 import SearchIcon from '@atlaskit/icon/glyph/search';
@@ -13,6 +14,22 @@ import API from '../../Lib/API'
 
 const SAMPLE_SENTENCE = 'Antaŭ la alveno de portugaloj, multaj homoj loĝis tie kie hodiaŭ estas Brazilo.'
 const styles = {
+  spinner: {
+    margin: '20px 0',
+    background: '#f3eedd',
+    padding: '10px 5px',
+    borderRadius: '5px'
+  },
+  status: {
+    margin: '20px 0',
+    background: '#f3eedd',
+    padding: '10px 5px',
+    borderRadius: '5px'
+  },
+  spinner_text: {
+    marginLeft: '5px',
+    fontWeight: 500
+  },
   sentenceWrapper: {
     width: '75%',
     margin: '25px auto',
@@ -38,6 +55,7 @@ class SentenceAnalyzer extends Component {
       analyzes_result: [],
       sentence: '',
       requestSent: false,
+      loading: false,
       isEditing: true
     }
 
@@ -68,10 +86,12 @@ class SentenceAnalyzer extends Component {
     const self = this
     const sentence = this.state.sentence
 
+    this.setState({ loading: true })
+
     API.analyzeSentence(sentence).then((response) => {
       return response.json()
     }).then((json) => {
-      self.setState({ analyzes_result: json, isEditing: false, requestSent: true })
+      self.setState({ analyzes_result: json, isEditing: false, requestSent: true, loading: false })
     })
   }
 
@@ -99,18 +119,24 @@ class SentenceAnalyzer extends Component {
         </PageHeader>
 
         <div>
-          <ToggleStateless
-            label="Change Visualization"
-            size="large"
-            onChange={this.activateEditing}
-            isChecked={isEditing}
-            isDisabled={this.toggleIsDisabled()}
-            isDefaultChecked={isEditing}
-          />
-          <span>
-            {isEditing && <span><EditFilledIcon /> Write Mode</span>}
-            {!isEditing && <span>&nbsp;<SearchIcon /> Inspection Mode</span>}
-          </span>
+          {this.state.loading && <div style={styles.spinner}>
+            <Spinner size='medium' /><span style={styles.spinner_text}>Analyzing...</span>
+          </div>}
+
+          {!this.state.loading && <div style={styles.status}>
+            <ToggleStateless
+              label="Change Visualization"
+              size="large"
+              onChange={this.activateEditing}
+              isChecked={isEditing}
+              isDisabled={this.toggleIsDisabled()}
+              isDefaultChecked={isEditing}
+            />
+            <span>
+              {isEditing && <span><EditFilledIcon /> Write Mode</span>}
+              {!isEditing && <span>&nbsp;<SearchIcon /> Inspection Mode</span>}
+            </span>
+          </div>}
         </div>
 
         {isEditing && <SentenceTextArea
