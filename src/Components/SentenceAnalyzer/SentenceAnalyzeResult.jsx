@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Button from '@atlaskit/button';
 import EditFilledIcon from '@atlaskit/icon/glyph/edit-filled';
 
-import Word from './Word'
+import { InlineWord } from './Word'
 
 const styles = {
   noResults: {
@@ -21,11 +21,6 @@ const styles = {
 }
 
 class SentenceAnalyzeResult extends Component {
-  COLORS = {
-    'Pronoun': 'red',
-    'Noun': 'yellow'
-  }
-
   render() {
     const {
       result = [],
@@ -50,7 +45,7 @@ class SentenceAnalyzeResult extends Component {
 
     for (var i = 0; i < result.length; i++) {
       const current = result[i]
-      const word = <Word
+      const word = <InlineWord
                       key={i}
                       grammarClass={current['value']}
                       content={current['word']}

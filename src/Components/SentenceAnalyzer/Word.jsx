@@ -22,8 +22,8 @@ const COLOR_BY_GRAMMAR_CLASS = {
   'undefined': 'grey'
 }
 
-
-class Word extends Component {
+// Word with `state` and on top of Atlaskit `<InlineDialog />`
+class InlineWord extends Component {
   constructor() {
     super()
     this.state = {
@@ -32,11 +32,7 @@ class Word extends Component {
   }
 
   render() {
-    const {
-      grammarClass = '',
-      content = '',
-      placement = 'bottom-start'
-    } = this.props
+    const { content, grammarClass, placement = 'bottom-start' } = this.props
 
     return (
       <InlineDialog
@@ -53,15 +49,21 @@ class Word extends Component {
           }}
           className='wordSpan'
         >
-          <Tag
-            text={content}
-            color={COLOR_BY_GRAMMAR_CLASS[grammarClass.toLowerCase()] || 'standard'}
-            style={styles.word}
-          />
+          <Word content={content} grammarClass={grammarClass} />
         </span>
       </InlineDialog>
     )
   }
+
 }
 
-export default Word;
+// Most basic representation of Word
+const Word = ({ content, grammarClass = ''}) => (
+  <Tag
+    text={content}
+    color={COLOR_BY_GRAMMAR_CLASS[grammarClass.toLowerCase()] || 'standard'}
+    style={styles.word}
+  />
+)
+
+export { InlineWord, Word }
