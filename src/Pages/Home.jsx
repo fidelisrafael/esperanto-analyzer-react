@@ -35,11 +35,12 @@ class PageHome extends Component {
     this.state = {
       analyzesResults: [],
       sentence: '',
-      requestSent: false,
       isLoading: false,
       isEditing: true
     }
 
+    // Instance property (not a state)
+    this.requestSent = false
     this.setSampleSentence = this.setSampleSentence.bind(this)
   }
 
@@ -69,12 +70,13 @@ class PageHome extends Component {
     API.analyzeSentence(sentence).then((response) => {
       return response.json()
     }).then((json) => {
-      self.setState({ analyzesResults: json, isEditing: false, requestSent: true, isLoading: false })
+      self.requestSent = true
+      self.setState({ analyzesResults: json, isEditing: false, isLoading: false })
     })
   }
 
   toggleIsDisabled() {
-    return (!this.hasMinimumSentence() || !this.state.requestSent)
+    return (!this.hasMinimumSentence() || !this.requestSent)
   }
 
   hasMinimumSentence() {
