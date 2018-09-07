@@ -57,21 +57,34 @@ class PageHome extends Component {
     this.setState({sentence: event.target.value});
   }
 
-  activateEditing(value) {
+  toggleEditing() {
     this.setState({ isEditing: !this.state.isEditing })
+  }
+
+  updateAnalyzesResults(results = []) {
+    this.setState({ analyzesResults: results, isEditing: false, isLoading: false })
+  }
+
+  updateIsLoading(state) {
+    this.setState({ isLoading: state })
+  }
+
+  requestAPISentenceAnalyze(sentence, callback) {
+    return API.analyzeSentence(sentence).then((response) => {
+      return response.json()
+    }).then((json) => {
+      return callback(json)
+    })
   }
 
   requestSentenceAnalyze() {
     const self = this
-    const sentence = this.state.sentence
 
-    this.setState({ isLoading: true })
+    this.updateIsLoading(true)
 
-    API.analyzeSentence(sentence).then((response) => {
-      return response.json()
-    }).then((json) => {
+    this.requestAPISentenceAnalyze(this.state.sentence, (response) => {
       self.requestSent = true
-      self.setState({ analyzesResults: json, isEditing: false, isLoading: false })
+      self.updateAnalyzesResults(response)
     })
   }
 
@@ -80,7 +93,7 @@ class PageHome extends Component {
   }
 
   hasMinimumSentence() {
-    return this.state.sentence && this.state.sentence.length >= 2
+    return !!this.state.sentence && this.state.sentence.length >= 2
   }
 
   render() {
@@ -109,8 +122,8 @@ class PageHome extends Component {
           sentence={sentence}
           canSubmit={this.hasMinimumSentence()}
           onSubmit={this.requestSentenceAnalyze.bind(this)}
-          onsentenceChange={this.handleSentenceChange.bind(this)}
-          onToggleChange={this.activateEditing.bind(this)}
+          onSentenceChange={this.handleSentenceChange.bind(this)}
+          onToggleChange={this.toggleEditing.bind(this)}
           toggleIsDisabled={this.toggleIsDisabled()}
           analyzesResults={analyzesResults}
         />

@@ -34,7 +34,7 @@ const SentenceAnalyzerView = (props) => {
     sentence,
     onSubmit,
     canSubmit,
-    onsentenceChange,
+    onSentenceChange,
     onToggleChange,
     toggleIsDisabled,
     analyzesResults
@@ -64,7 +64,7 @@ const SentenceAnalyzerView = (props) => {
       {isEditing && <SentenceTextArea
         sentence={sentence}
         onSubmit={onSubmit}
-        onChange={onsentenceChange}
+        onChange={onSentenceChange}
         canSubmit={canSubmit}
       />}
 
