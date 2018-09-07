@@ -65,9 +65,9 @@ class SentenceAnalyzeResult extends Component {
         <div>
           <strong><i>Analyze Results:</i> </strong>
 
-          <p className='words-list'>
+          <div className='words-list'>
             {this.renderWords(result)}
-          </p>
+          </div>
         </div>
 
         <p style={styles.backBtn}>{BackButton}</p>

@@ -7,7 +7,7 @@ import PageHeader from '@atlaskit/page-header'
 import SentenceAnalyzerView from './../Components/SentenceAnalyzer/SentenceAnalyzerView'
 import API from './../Lib/API'
 
-const SAMPLE_SENTENCE = 'Antaŭ la alveno de portugaloj, multaj homoj loĝis tie kie hodiaŭ estas Brazilo.'
+
 const styles = {
   sentenceWrapper: {
     width: '75%',
@@ -27,6 +27,8 @@ const styles = {
 
 // Kind of Controller that integrates data and view
 class PageHome extends Component {
+  SAMPLE_SENTENCE = 'Antaŭ la alveno de portugaloj, multaj homoj loĝis tie kie hodiaŭ estas Brazilo.'
+
   constructor() {
     super()
 
@@ -43,11 +45,11 @@ class PageHome extends Component {
 
   setSampleSentence(event) {
     // Already visualizing test sentence results
-    if((this.state.sentence === SAMPLE_SENTENCE) && !this.state.isEditing) {
+    if((this.state.sentence === this.SAMPLE_SENTENCE) && !this.state.isEditing) {
       return false
     }
 
-    this.setState({ sentence: SAMPLE_SENTENCE }, () => (this.requestSentenceAnalyze()))
+    this.setState({ sentence: this.SAMPLE_SENTENCE }, () => (this.requestSentenceAnalyze()))
   }
 
   handleSentenceChange(event) {
