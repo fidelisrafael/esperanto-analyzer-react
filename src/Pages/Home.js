@@ -1,35 +1,14 @@
 import React, { Component } from 'react';
 import ToggleStateless from '@atlaskit/toggle';
-import Spinner from '@atlaskit/spinner';
 import QueuesIcon from '@atlaskit/icon/glyph/queues';
-import EditFilledIcon from '@atlaskit/icon/glyph/edit-filled';
-import SearchIcon from '@atlaskit/icon/glyph/search';
 
 import PageHeader from '@atlaskit/page-header'
 
-import SentenceAnalyzeResult from '../Components/SentenceAnalyzer/SentenceAnalyzeResult'
-import SentenceTextArea from '../Components/SentenceAnalyzer/SentenceTextArea'
-
+import SentenceAnalyzerView from './../Components/SentenceAnalyzer/SentenceAnalyzerView'
 import API from './../Lib/API'
 
 const SAMPLE_SENTENCE = 'Antaŭ la alveno de portugaloj, multaj homoj loĝis tie kie hodiaŭ estas Brazilo.'
 const styles = {
-  spinner: {
-    margin: '20px 0',
-    background: '#f3eedd',
-    padding: '10px 5px',
-    borderRadius: '5px'
-  },
-  status: {
-    margin: '20px 0',
-    background: '#f3eedd',
-    padding: '10px 5px',
-    borderRadius: '5px'
-  },
-  spinner_text: {
-    marginLeft: '5px',
-    fontWeight: 500
-  },
   sentenceWrapper: {
     width: '75%',
     margin: '25px auto',
@@ -44,57 +23,6 @@ const styles = {
     textDecoration: 'underline',
     cursor: 'pointer'
   }
-}
-
-// Just the view implementation without state
-const SentenceAnalyzerView = (props) => {
-  const {
-    isLoading,
-    isEditing,
-    sentence,
-    onSubmit,
-    canSubmit,
-    onsentenceChange,
-    onToggleChange,
-    toggleIsDisabled,
-    analyzesResults
-  } = props
-
-  return (
-    <div>
-      {isLoading && <div style={styles.spinner}>
-        <Spinner size='medium' /><span style={styles.spinner_text}>Analyzing...</span>
-      </div>}
-
-      {!isLoading && <div style={styles.status}>
-        <ToggleStateless
-          label="Change Visualization"
-          size="large"
-          onChange={onToggleChange}
-          isChecked={isEditing}
-          isDisabled={toggleIsDisabled}
-          isDefaultChecked={isEditing}
-        />
-        <span>
-          {isEditing && <span><EditFilledIcon /> Write Mode</span>}
-          {!isEditing && <span>&nbsp;<SearchIcon /> Inspection Mode</span>}
-        </span>
-      </div>}
-
-      {isEditing && <SentenceTextArea
-        sentence={sentence}
-        onSubmit={onSubmit}
-        onChange={onsentenceChange}
-        canSubmit={canSubmit}
-      />}
-
-      {!isEditing &&
-        <SentenceAnalyzeResult
-          onBackClick={onToggleChange}
-          result={analyzesResults}
-      />}
-    </div>
-  )
 }
 
 // Kind of Controller that integrates data and view

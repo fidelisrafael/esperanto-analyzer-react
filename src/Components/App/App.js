@@ -12,7 +12,6 @@ class App extends Component {
     return (
       <Page className='app-wrapper'>
         <GithubRibbon href='https://github.com/fidelisrafael/esperanto-analyzer-react/' />
-
         <PageHome {...this.props} />
       </Page>
     );

@@ -20,31 +20,22 @@ const styles = {
   }
 }
 
-class SentenceAnalyzeResult extends Component {
-  render() {
-    const {
-      result = [],
-      onBackClick,
-    } = this.props
+const NoResultsFoundView = (props) => (
+  <div style={styles.noResults}>
+    <span className='text'>
+      No analyzes results to show for you query. <br />
+      Switch to Writing Mode (<EditFilledIcon/>) to type some Esperanto sentences.
+    </span>
+  </div>
+)
 
+class SentenceAnalyzeResult extends Component {
+
+  renderWords(words) {
     const wordsToRender = []
 
-    const BackButton = <Button appearance={'primary'} onClick={onBackClick}>Back</Button>
-
-    if (!result.length) {
-      return (
-        <div style={styles.noResults} >
-          <span className='text'>
-            No analyzes results to show. <br />
-            Switch to Writing Mode (<EditFilledIcon/>) to type some Esperanto sentences.
-          </span><br />
-          <p style={styles.backBtn}>{BackButton}</p>
-        </div>
-      )
-    }
-
-    for (var i = 0; i < result.length; i++) {
-      const current = result[i]
+    for (var i = 0; i < words.length; i++) {
+      const current = words[i]
       const word = <InlineWord
                       key={i}
                       grammarClass={current['value']}
@@ -54,12 +45,29 @@ class SentenceAnalyzeResult extends Component {
       wordsToRender.push(word)
     }
 
+    return wordsToRender
+  }
+
+  render() {
+    const {
+      result = [],
+      onBackClick,
+    } = this.props
+
+    const BackButton = <Button appearance={'primary'} onClick={onBackClick}>Back</Button>
+
+    if (!result.length) {
+      return (<span><NoResultsFoundView /><span style={styles.backBtn}>{BackButton}</span></span>)
+    }
+
     return (
       <div style={styles.wrapper} className='sentence-analyze-result-wrapper'>
         <div>
           <strong><i>Analyze Results:</i> </strong>
 
-          <p className='words-list'>{wordsToRender}</p>
+          <p className='words-list'>
+            {this.renderWords(result)}
+          </p>
         </div>
 
         <p style={styles.backBtn}>{BackButton}</p>
@@ -68,4 +76,5 @@ class SentenceAnalyzeResult extends Component {
   }
 }
 
+export {NoResultsFoundView}
 export default SentenceAnalyzeResult;
