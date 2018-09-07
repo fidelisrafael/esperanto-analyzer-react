@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
 import '@atlaskit/css-reset';
 import './App.css';
 
+import React, { Component } from 'react';
 import Page from '@atlaskit/page';
 
-import SentenceAnalyzer from '../SentenceAnalyzer/SentenceAnalyzer'
+import PageHome from '../../Pages/Home'
 import GithubRibbon from '../GithubRibbon/GithubRibbon'
 
 class App extends Component {
@@ -12,7 +12,8 @@ class App extends Component {
     return (
       <Page className='app-wrapper'>
         <GithubRibbon href='https://github.com/fidelisrafael/esperanto-analyzer-react/' />
-        <SentenceAnalyzer />
+
+        <PageHome {...this.props} />
       </Page>
     );
   }
