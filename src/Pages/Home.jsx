@@ -27,6 +27,7 @@ const styles = {
 
 // Kind of Controller that integrates data and view
 class PageHome extends Component {
+  MINIMUM_VALID_SENTENCE_LENGTH = 2
   SAMPLE_SENTENCE = 'Antaŭ la alveno de portugaloj, multaj homoj loĝis tie kie hodiaŭ estas Brazilo.'
 
   constructor() {
@@ -50,42 +51,38 @@ class PageHome extends Component {
       return false
     }
 
-    this.setState({ sentence: this.SAMPLE_SENTENCE }, () => (this.requestSentenceAnalyze()))
+    this.setState({ sentence: this.SAMPLE_SENTENCE }, () => (this.onSubmit()))
   }
 
   handleSentenceChange(event) {
     this.setState({sentence: event.target.value});
   }
 
-  toggleEditing() {
-    this.setState({ isEditing: !this.state.isEditing })
-  }
-
-  updateAnalyzesResults(results = []) {
-    this.setState({ analyzesResults: results, isEditing: false, isLoading: false })
-  }
-
-  updateIsLoading(state) {
-    this.setState({ isLoading: state })
-  }
-
-  requestAPISentenceAnalyze(sentence, callback) {
-    return API.analyzeSentence(sentence).then((response) => {
-      return response.json()
-    }).then((json) => {
-      return callback(json)
-    })
-  }
-
-  requestSentenceAnalyze() {
+  onSubmit(updateLoading=true) {
     const self = this
 
-    this.updateIsLoading(true)
+    self.setState({ isLoading: true })
 
-    this.requestAPISentenceAnalyze(this.state.sentence, (response) => {
+    return self.requestSentenceAnalyze(self.state.sentence, (response) => {
       self.requestSent = true
-      self.updateAnalyzesResults(response)
+      self.updateAnalyzesResults(response, updateLoading)
     })
+  }
+
+  updateAnalyzesResults(results = [], updateLoading=true) {
+    const loadingValue = updateLoading ? { isLoading: false } : {}
+
+    this.setState({ analyzesResults: results, isEditing: false, ...loadingValue })
+  }
+
+  requestSentenceAnalyze(sentence, callback = (json) => (json)) {
+    return this.analyzeSentenceAPIRequest(sentence, (response) => {
+      return callback(response)
+    })
+  }
+
+  toggleEditing() {
+    this.setState({ isEditing: !this.state.isEditing })
   }
 
   toggleIsDisabled() {
@@ -93,7 +90,11 @@ class PageHome extends Component {
   }
 
   hasMinimumSentence() {
-    return !!this.state.sentence && this.state.sentence.length >= 2
+    return this.state.sentence.length >= this.MINIMUM_VALID_SENTENCE_LENGTH
+  }
+
+  analyzeSentenceAPIRequest(sentence, callback=((json) => (json))) {
+    return API.analyzeSentence(sentence).then((response) => (callback(response.json())))
   }
 
   render() {
@@ -121,7 +122,7 @@ class PageHome extends Component {
           isEditing={isEditing}
           sentence={sentence}
           canSubmit={this.hasMinimumSentence()}
-          onSubmit={this.requestSentenceAnalyze.bind(this)}
+          onSubmit={this.onSubmit.bind(this)}
           onSentenceChange={this.handleSentenceChange.bind(this)}
           onToggleChange={this.toggleEditing.bind(this)}
           toggleIsDisabled={this.toggleIsDisabled()}
