@@ -6,9 +6,10 @@ cache:
   - node_modules
 script:
   - cd esperanto-analyzer-react
-  - npm install
-  - npm test
-  - npm run build
+  - yarn install
+  - yarn install jest-cli
+  - yarn test
+  - yarn run build
 deploy:
   provider: pages
   skip_cleanup: true
