@@ -10,6 +10,10 @@ You can try the demo at: https://fidelisrafael.github.io/esperanto-analyzer-reac
 
 ---
 
+[![forthebadge](https://forthebadge.com/images/badges/made-with-python.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/built-by-developers.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/powered-by-electricity.svg)](https://forthebadge.com)
+
+[![PyPI version](https://badge.fury.io/py/esperanto-analyzer.svg)](https://badge.fury.io/py/esperanto-analyzer) [![Build Status](https://travis-ci.com/fidelisrafael/esperanto-analyzer.svg?token=k5uMpn3U564QqWar8oA1&branch=master)](https://travis-ci.com/fidelisrafael/esperanto-analyzer) [![codecov](https://codecov.io/gh/fidelisrafael/esperanto-analyzer/branch/master/graph/badge.svg)](https://codecov.io/gh/fidelisrafael/esperanto-analyzer) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
+
 ## Development Setup
 
 ```bash

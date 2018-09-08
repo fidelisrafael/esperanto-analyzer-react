@@ -25,16 +25,20 @@ const withTestComponent = (callback=(homeComponent, fn) => {fn()}, patchAPI=true
 
 describe('<PageHome />', () => {
   describe('MINIMUM_VALID_SENTENCE_LENGTH', () => {
-    withTestComponent((home, tearDown) => {
-      expect(home.MINIMUM_VALID_SENTENCE_LENGTH).toEqual(2)
-      tearDown()
+    it('has the right value', () => {
+      withTestComponent((home, tearDown) => {
+        expect(home.MINIMUM_VALID_SENTENCE_LENGTH).toEqual(2)
+        tearDown()
+      })
     })
   })
 
   describe('SAMPLE_SENTENCE', () => {
-    withTestComponent((home, tearDown) => {
-      expect(home.SAMPLE_SENTENCE).toEqual('Antaŭ la alveno de portugaloj, multaj homoj loĝis tie kie hodiaŭ estas Brazilo.')
-      tearDown()
+    it('has the right value', () => {
+      withTestComponent((home, tearDown) => {
+        expect(home.SAMPLE_SENTENCE).toEqual('Antaŭ la alveno de portugaloj, multaj homoj loĝis tie kie hodiaŭ estas Brazilo.')
+        tearDown()
+      })
     })
   })
 
