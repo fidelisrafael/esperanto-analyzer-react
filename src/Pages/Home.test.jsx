@@ -1,87 +1,87 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
-import { renderToString, renderToStaticMarkup } from 'react-dom/server'
 import Home from './Home'
 import API from './../Lib/API'
+import TestUtils from './../Lib/TestUtils';
 
 jest.mock('./../Lib/API');
 
 const SAMPLE_SENTENCE_JSON_RESPONSE = [{"word":"Antaŭ","value":"Adverb"},{"word":"la","value":"Article"},{"word":"alveno","value":"Noun"},{"word":"de","value":"Preposition"},{"word":"portugaloj","value":"Noun"},{"word":"multaj","value":"Adjective"},{"word":"homoj","value":"Noun"},{"word":"loĝis","value":"Verb"},{"word":"tie","value":"Adverb"},{"word":"kie","value":"Adverb"},{"word":"hodiaŭ","value":"Adverb"},{"word":"estas","value":"Verb"},{"word":"Brazilo","value":"Noun"}]
 
-const withTestComponent = (callback=(homeComponent, fn) => {fn()}, patchAPI=true) => {
-  const div = document.createElement('div')
-  const tearDownFn = () => { ReactDOM.unmountComponentAtNode(div) }
-
-  const homeComponent = ReactDOM.render(<Home />, div)
+const withTestComponent = (callbackFn, patchAPI=true) => {
+  var componentCallbackFn = callbackFn
 
   if(patchAPI) {
-    homeComponent.analyzeSentenceAPIRequest = jest.fn((sentence, callback) => {
-      return callback(SAMPLE_SENTENCE_JSON_RESPONSE)
-    })
+    componentCallbackFn = (component, next) => {
+      component.analyzeSentenceAPIRequest = jest.fn((sentence, callback) => (callback(SAMPLE_SENTENCE_JSON_RESPONSE)))
+      callbackFn(component, next)
+    }
   }
 
-  callback.apply(homeComponent, [homeComponent, tearDownFn])
+  return TestUtils.createTestComponent(<Home />, componentCallbackFn)
 }
 
 describe('<PageHome />', () => {
+  it('renders without crashing', () => {
+    withTestComponent((home, next) => {
+      expect(home).toBeDefined()
+      next()
+    })
+  })
+
   describe('MINIMUM_VALID_SENTENCE_LENGTH', () => {
     it('has the right value', () => {
-      withTestComponent((home, tearDown) => {
+      withTestComponent((home, next) => {
         expect(home.MINIMUM_VALID_SENTENCE_LENGTH).toEqual(2)
-        tearDown()
+        next()
       })
     })
   })
 
   describe('SAMPLE_SENTENCE', () => {
     it('has the right value', () => {
-      withTestComponent((home, tearDown) => {
+      withTestComponent((home, next) => {
         expect(home.SAMPLE_SENTENCE).toEqual('Antaŭ la alveno de portugaloj, multaj homoj loĝis tie kie hodiaŭ estas Brazilo.')
-        tearDown()
+        next()
       })
     })
   })
 
   describe('#setSampleSentence()', () => {
     it('Should do nothing if state.sentence is the sample text and user is not editing the sentence', () => {
-      withTestComponent((home, tearDown) => {        
+      withTestComponent((home, next) => {        
         home.setState({ sentence: home.SAMPLE_SENTENCE, isEditing: false })
 
         expect(home.setSampleSentence()).toEqual(false)
-
-        tearDown()
+        next()
       })
     })
     
     it('Should update state.sentence', () => {
-      withTestComponent((home, tearDown) => {        
+      withTestComponent((home, next) => {        
         // First test to make sure sentence is empty and will change
         expect(home.state.sentence).toEqual('')
 
         home.setSampleSentence()
 
         expect(home.state.sentence).not.toEqual('')
-
-        tearDown()
+        next()
       })
     })
 
     it('Should update state.analyzesResults', () => {
-      withTestComponent((home, tearDown) => {
+      withTestComponent((home, next) => {
         home.setSampleSentence()
 
         expect(home.state.analyzesResults).toEqual(SAMPLE_SENTENCE_JSON_RESPONSE)
-        //expect(home.state.isLoading).toEqual(true)
+        next()
       })
     })
 
-    it('Should update state.analyzesResults', () => {
+    it('Should update `requestSent` class property', () => {
       withTestComponent((home, tearDown) => {
         home.setSampleSentence()
 
-        // Component class properties
         expect(home.requestSent).toEqual(true)
-
         tearDown()
       })
     })
@@ -93,7 +93,6 @@ describe('<PageHome />', () => {
         home.handleSentenceChange({ target: { value: 'Multajn' }})
 
         expect(home.state.sentence).toEqual('Multajn')
-
         tearDown()
       })
     })
@@ -106,7 +105,6 @@ describe('<PageHome />', () => {
         home.onSubmit(false)
 
         expect(home.state.isLoading).toEqual(true)
-
         tearDown()
       })
     })
@@ -117,7 +115,6 @@ describe('<PageHome />', () => {
         home.onSubmit()
 
         expect(home.state.isLoading).toEqual(false)
-
         tearDown()
       })
     })
@@ -128,7 +125,6 @@ describe('<PageHome />', () => {
         home.onSubmit()
 
         expect(home.requestSent).toEqual(true)
-
         tearDown()
       })
     })
@@ -139,7 +135,6 @@ describe('<PageHome />', () => {
         home.onSubmit()
 
         expect(home.updateAnalyzesResults.mock.calls.length).toEqual(1)
-
         tearDown()
       })
     })
@@ -150,7 +145,6 @@ describe('<PageHome />', () => {
         home.onSubmit()
 
         expect(home.updateAnalyzesResults.mock.calls[0]).toEqual([SAMPLE_SENTENCE_JSON_RESPONSE, true])
-
         tearDown()
       })
     })
@@ -161,7 +155,6 @@ describe('<PageHome />', () => {
         home.onSubmit(false)
 
         expect(home.updateAnalyzesResults.mock.calls[0]).toEqual([SAMPLE_SENTENCE_JSON_RESPONSE, false])
-
         tearDown()
       })
     })
@@ -173,7 +166,6 @@ describe('<PageHome />', () => {
         home.updateAnalyzesResults([{'word': 'mia', 'value': 'pronoun'}])
 
         expect(home.state.analyzesResults).toEqual([{'word': 'mia', 'value': 'pronoun'}])
-
         tearDown()
       })
     })
@@ -183,7 +175,6 @@ describe('<PageHome />', () => {
         home.updateAnalyzesResults()
 
         expect(home.state.analyzesResults).toEqual([])
-
         tearDown()
       })
     })
@@ -193,7 +184,6 @@ describe('<PageHome />', () => {
         home.updateAnalyzesResults([{'word': 'mia', 'value': 'pronoun'}])
 
         expect(home.state.isEditing).toEqual(false)
-
         tearDown()
       })
     })
@@ -203,7 +193,6 @@ describe('<PageHome />', () => {
         home.updateAnalyzesResults([{'word': 'mia', 'value': 'pronoun'}])
 
         expect(home.state.isLoading).toEqual(false)
-
         tearDown()
       })
     })
@@ -218,7 +207,6 @@ describe('<PageHome />', () => {
 
         expect(home.analyzeSentenceAPIRequest.mock.calls.length).toEqual(1)
         expect(home.analyzeSentenceAPIRequest.mock.calls[0][0]).toEqual('Saluton!')
-
         tearDown()
       })
     })
@@ -231,7 +219,6 @@ describe('<PageHome />', () => {
 
         expect(callbackFn.mock.calls.length).toEqual(1)
         expect(callbackFn.mock.calls[0][0]).toEqual(SAMPLE_SENTENCE_JSON_RESPONSE)
-
         tearDown()
       })
     })
@@ -240,36 +227,30 @@ describe('<PageHome />', () => {
   describe('#toggleEditing()', () => {
     it('Should update state.isEditing as false if is true', () => {
       withTestComponent((home, tearDown) => {
-
         home.setState({ isEditing: true })
         home.toggleEditing()
 
         expect(home.state.isEditing).toEqual(false)
-
         tearDown()
       })
     })
 
     it('Should update state.isEditing as true if is undefined', () => {
       withTestComponent((home, tearDown) => {
-
         home.setState({ isEditing: undefined })
         home.toggleEditing()
 
         expect(home.state.isEditing).toEqual(true)
-
         tearDown()
       })
     })
 
     it('Should update state.isEditing as false if is true', () => {
       withTestComponent((home, tearDown) => {
-
         home.setState({ isEditing: true })
         home.toggleEditing()
 
         expect(home.state.isEditing).toEqual(false)
-
         tearDown()
       })
     })
@@ -282,7 +263,6 @@ describe('<PageHome />', () => {
         home.setState({ sentence: 'a'.repeat(home.MINIMUM_VALID_SENTENCE_LENGTH) })
 
         expect(home.toggleIsDisabled()).toEqual(true)
-
         tearDown()
       })
     })
@@ -293,7 +273,6 @@ describe('<PageHome />', () => {
         home.setState({ sentence: 'a'.repeat(home.MINIMUM_VALID_SENTENCE_LENGTH) })
 
         expect(home.toggleIsDisabled()).toEqual(false)
-
         tearDown()
       })
     })
@@ -304,7 +283,6 @@ describe('<PageHome />', () => {
         home.setState({ sentence: 'a'.repeat(home.MINIMUM_VALID_SENTENCE_LENGTH - 1) })
 
         expect(home.toggleIsDisabled()).toEqual(true)
-
         tearDown()
       })
     })
@@ -315,7 +293,6 @@ describe('<PageHome />', () => {
         home.setState({ sentence: 'a'.repeat(home.MINIMUM_VALID_SENTENCE_LENGTH) })
 
         expect(home.toggleIsDisabled()).toEqual(false)
-
         tearDown()
       })
     })
@@ -327,7 +304,6 @@ describe('<PageHome />', () => {
         home.setState({ sentence: 'a'.repeat(home.MINIMUM_VALID_SENTENCE_LENGTH - 1) })
 
         expect(home.hasMinimumSentence()).toEqual(false)
-
         tearDown()
       })
     })
@@ -337,7 +313,6 @@ describe('<PageHome />', () => {
         home.setState({ sentence: 'a'.repeat(home.MINIMUM_VALID_SENTENCE_LENGTH) })
 
         expect(home.hasMinimumSentence()).toEqual(true)
-
         tearDown()
       })
     })
@@ -353,7 +328,7 @@ describe('<PageHome />', () => {
         })
 
         return home.analyzeSentenceAPIRequest('Saluton').then((data) => {
-          expect(data.json()).toEqual(SAMPLE_SENTENCE_JSON_RESPONSE)
+          expect(data).toEqual(SAMPLE_SENTENCE_JSON_RESPONSE)
         })
 
       // This false parameter here tells the function `withTestComponent` to not patch the
@@ -363,19 +338,12 @@ describe('<PageHome />', () => {
   })
 
   describe('#render()', () => {
-    it('renders <Home /> without crashing', () => {
-      withTestComponent((home, tearDown) => {
-        tearDown()
-      })
-    })
-
     it('renders <PageHeader /> as children', () => {
       withTestComponent((home, tearDown) => {
         const renderedHome = home.render()
         const pageHeader = renderedHome.props.children[0]
 
         expect(pageHeader.type.name).toEqual('PageHeader')
-
         tearDown()
       })
     })
@@ -386,7 +354,6 @@ describe('<PageHome />', () => {
         const sentenceAnalyzerView = renderedHome.props.children[1]
 
         expect(sentenceAnalyzerView.type.name).toEqual('SentenceAnalyzerView')
-
         tearDown()
       })
     })
@@ -428,7 +395,6 @@ describe('<PageHome />', () => {
           const sentenceAnalyzerView = renderedHome.props.children[1]
 
           expect(sentenceAnalyzerView.props[prop]).toEqual(expected)
-
           tearDown()
         })
       }

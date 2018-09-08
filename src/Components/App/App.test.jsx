@@ -1,21 +1,10 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import App from './App';
-import { isContext } from 'vm';
+import TestUtils from './../../Lib/TestUtils';
 
-const withTestComponent = (callbackFn) => {
-  const div = document.createElement('div')
-  const tearDownFn = () => { ReactDOM.unmountComponentAtNode(div) }
-
-  const testComponent = ReactDOM.render(<App />, div)
-
-  if(callbackFn) {
-    callbackFn.apply(testComponent, [testComponent, tearDownFn])
-  }
-
-  // In case of no callback associated
-  return { testComponent: testComponent, tearDownFn: tearDownFn }
-}
+const withTestComponent = (callbackFn) => (
+  TestUtils.createTestComponent(<App />, callbackFn)
+)
 
 describe('<App />', () => {
   it('renders without crashing', () => {
