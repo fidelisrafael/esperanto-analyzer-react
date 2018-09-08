@@ -6,7 +6,6 @@ cache:
   - node_modules
 script:
   - yarn install
-  - yarn add jest-cli
   - yarn test
   - yarn run build
 deploy:
