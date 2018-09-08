@@ -21,6 +21,7 @@
     "@atlaskit/tag": "^6.0.7",
     "@atlaskit/toggle": "^5.0.8",
     "gh-pages": "^1.2.0",
+    "jest-cli": "^23.5.0",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
     "react-scripts": "1.1.5",
