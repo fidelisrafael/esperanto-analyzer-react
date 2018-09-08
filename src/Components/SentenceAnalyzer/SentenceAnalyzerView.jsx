@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Spinner from '@atlaskit/spinner';
 import { ToggleStateless } from '@atlaskit/toggle'
 import EditFilledIcon from '@atlaskit/icon/glyph/edit-filled';

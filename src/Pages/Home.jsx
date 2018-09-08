@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ToggleStateless from '@atlaskit/toggle';
 import QueuesIcon from '@atlaskit/icon/glyph/queues';
 
 import PageHeader from '@atlaskit/page-header'
