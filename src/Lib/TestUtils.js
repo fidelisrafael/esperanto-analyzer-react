@@ -1,25 +1,26 @@
 import ReactDOM from 'react-dom';
 
 const TestUtils = {
-    createRenderedTestComponent: (component) => {
-        const tearDownFn = () => { ReactDOM.unmountComponentAtNode(div) }
-        const div = document.createElement('div')
-        
-        const testComponent = ReactDOM.render(component, div)
-        
-        return { testComponent: testComponent, tearDownFn: tearDownFn }
-    },
+  createRenderedComponent: (component) => {
+    const tearDownFn = () => { ReactDOM.unmountComponentAtNode(div) }
+    const div = document.createElement('div')
 
-    createTestComponent: (component, callbackFn) => {
-        const componentData = TestUtils.createRenderedTestComponent(component)
+    const testComponent = ReactDOM.render(component, div)
 
-        if(callbackFn) {
-            return callbackFn.apply(componentData.testComponent, [componentData.testComponent, componentData.tearDownFn])
-        }
+    return { testComponent: testComponent, tearDownFn: tearDownFn }
+  },
 
-        // In case of no callback associated
-        return componentData
+  createTestComponent: (component, callbackFn) => {
+    const componentData = TestUtils.createRenderedComponent(component)
+    const { testComponent, tearDownFn } = componentData
+
+    if(callbackFn) {
+        return callbackFn.apply(testComponent, [testComponent, tearDownFn])
     }
+
+    // In case of no callback associated
+    return componentData
+  }
 }
 
 export default TestUtils
