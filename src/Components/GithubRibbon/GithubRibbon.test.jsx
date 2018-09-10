@@ -73,7 +73,7 @@ describe('<GithubRibbon />', () => {
 
   describe('DOM Rendering', () => {
     it('Should render with default properties', () => {
-      const expectedOutput = '<a href="" target="_blank"><img style="position:absolute;top:0;right:0;border:0" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on Github"/></a>' 
+      const expectedOutput = '<a href="" target="_blank"><img style="position:absolute;top:0;right:0;border:0" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on Github"/></a>'
 
       expect(renderToStaticMarkup(<GithubRibbon />)).toEqual(expectedOutput)
     })
@@ -82,10 +82,10 @@ describe('<GithubRibbon />', () => {
       const component = <GithubRibbon
                           src='https://s3.amazonaws.com/github/ribbons/forkme_left_green_007200.png'
                           href='https://github.com/fidelisrafael/esperanto-analyzer-react'
-                          alt='Fork esperanto-analyzer-react on Github' 
+                          alt='Fork esperanto-analyzer-react on Github'
                         />
 
-      const expectedOutput = '<a href="https://github.com/fidelisrafael/esperanto-analyzer-react" target="_blank"><img style="position:absolute;top:0;right:0;border:0" src="https://s3.amazonaws.com/github/ribbons/forkme_left_green_007200.png" alt="Fork esperanto-analyzer-react on Github"/></a>' 
+      const expectedOutput = '<a href="https://github.com/fidelisrafael/esperanto-analyzer-react" target="_blank"><img style="position:absolute;top:0;right:0;border:0" src="https://s3.amazonaws.com/github/ribbons/forkme_left_green_007200.png" alt="Fork esperanto-analyzer-react on Github"/></a>'
 
       expect(renderToStaticMarkup(component)).toEqual(expectedOutput)
     })
