@@ -5,18 +5,17 @@ const DEFAULT_STYLE = {
 }
 export const DEFAULT_RIBBON_IMG = "https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"
 
-const GithubRibbon = (props) => {
+const GithubRibbon = (props = {}) => {
   const {
     href = '',
     src = DEFAULT_RIBBON_IMG,
     alt = 'Fork me on Github',
     style = DEFAULT_STYLE,
-    target = '_blank',
-    isTest = null
+    target = '_blank'
   } = props
 
   return (
-    <a isTesting={isTest} href={href} target={target}>
+    <a href={href} target={target}>
       <img
         style={style}
         src={src}
