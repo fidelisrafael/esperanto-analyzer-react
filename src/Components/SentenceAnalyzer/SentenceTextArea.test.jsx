@@ -59,8 +59,17 @@ describe('<SentenceTextArea />', () => {
         next()
       })
     })
-  })
 
+    it('Should have a label', () => {
+      renderComponent((component, next) => {
+        const { children } = component.render().props
+
+        // This will be useful for i18n testing sooner
+        expect(children[0].props.children.props.label.props.children[1]).toEqual(' Text in Esperanto')
+        next()
+      })
+    })
+  })
 
   describe('<Button />', () => {
     it('Should render component inside <fieldset>', () => {
@@ -157,4 +166,3 @@ describe('<SentenceTextArea />', () => {
     })
   })
 })
-
