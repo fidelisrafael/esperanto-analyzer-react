@@ -1,7 +1,8 @@
 import React from 'react';
-import { Word, InlineWord, COLOR_BY_GRAMMAR_CLASS, STYLES } from './Word';
-import TestUtils from '../../Lib/TestUtils'
-import { renderToStaticMarkup } from 'react-dom/server';
+import { renderToStaticMarkup } from 'react-dom/server'
+
+import { Word, InlineWord, COLOR_BY_GRAMMAR_CLASS, STYLES } from './../Word';
+import TestUtils from './../../../Lib/TestUtils'
 
 const TEST_PROPS = { content: 'Saluton!', grammarClass: 'interjection' }
 const EXPECTED_OUTPUT_CLOSED = '<span class="wordSpan"><div class="sc-dnqmqq lkXyJm" color="grey"><span class="sc-htpNat gPJvVz" tabindex="-1" color="grey" role=""><span class="sc-bxivhb dMExre" color="grey">Saluton!</span></span></div></span>'
@@ -63,7 +64,7 @@ describe('<Word />', () => {
   describe('DOM Rendered', () => {
     it('Should just render the word withour the `grammarClass`', () => {
       const component = renderComponent(TEST_PROPS)
-      
+
       const expected = "<div class=\"sc-dnqmqq lkXyJm\" color=\"grey\"><span class=\"sc-htpNat gPJvVz\" tabindex=\"-1\" color=\"grey\" role=\"\"><span class=\"sc-bxivhb dMExre\" color=\"grey\">Saluton!</span></span></div>"
 
       expect(renderToStaticMarkup(component)).toEqual(expected)
@@ -131,7 +132,7 @@ describe('<InlineWord />', () => {
       next()
     })
   })
-  
+
   it('Should opens the <InlineDialog /> when clicking in the <span>', () => {
     renderComponent((component, next) => {
       const rendered = component.render()
@@ -175,7 +176,7 @@ describe('<InlineWord />', () => {
     it('Should display the <InlineDialog> `content` if `state.dialogIsOpen` is true', () => {
       renderComponent(TEST_PROPS, (component, next) => {
         component.setState({ dialogIsOpen: true })
-        
+
         expect(renderToStaticMarkup(component.render())).toEqual(EXPECTED_OUTPUT_OPEN)
         next()
       })
@@ -185,14 +186,14 @@ describe('<InlineWord />', () => {
       renderComponent(TEST_PROPS, (component, next) => {
         component.setState({ dialogIsOpen: false })
         const renderedComponent = component.render()
-  
+
         expect(renderToStaticMarkup(renderedComponent)).toEqual(EXPECTED_OUTPUT_CLOSED)
-  
+
         renderedComponent.props.onContentClick()
-  
+
         // Rendering again
         expect(renderToStaticMarkup(component.render())).toEqual(EXPECTED_OUTPUT_OPEN)
-  
+
         next()
       })
     })
@@ -203,12 +204,12 @@ describe('<InlineWord />', () => {
         const renderedComponent = component.render()
 
         expect(renderToStaticMarkup(renderedComponent)).toEqual(EXPECTED_OUTPUT_OPEN)
-  
+
         renderedComponent.props.onContentClick()
-  
+
         // Rendering again
         expect(renderToStaticMarkup(component.render())).toEqual(EXPECTED_OUTPUT_CLOSED)
-  
+
         next()
       })
     })

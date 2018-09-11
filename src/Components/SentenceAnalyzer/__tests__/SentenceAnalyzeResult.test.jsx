@@ -1,9 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { renderToStaticMarkup } from 'react-dom/server'
-import SentenceAnalyzeResult, { STYLES, NoResultsFoundView } from './SentenceAnalyzeResult'
-import { InlineWord } from './Word'
-import TestUtils from '../../Lib/TestUtils'
+import SentenceAnalyzeResult, { STYLES, NoResultsFoundView } from './../SentenceAnalyzeResult'
+import { InlineWord } from './../Word'
+import TestUtils from './../../../Lib/TestUtils'
 
 const SIMPLE_SAMPLE_RESULTS = [
   { 'word': 'mia', value: 'pronoun' },

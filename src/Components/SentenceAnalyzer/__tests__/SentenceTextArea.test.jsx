@@ -1,7 +1,7 @@
 import React from 'react';
-import SentenceTextArea, { STYLES } from './SentenceTextArea';
-import TestUtils from '../../Lib/TestUtils'
-import { renderToStaticMarkup } from 'react-dom/server';
+import { renderToStaticMarkup } from 'react-dom/server'
+import SentenceTextArea, { STYLES } from './../SentenceTextArea'
+import TestUtils from './../../../Lib/TestUtils'
 
 const TEST_PROPS = { sentence: 'Mi loĝas en Sao Paulo' }
 const EXPECTED_HTML_OUTPUT = "<div><fieldset style=\"display:block;margin-bottom:15px\"><div class=\"sc-cSHVUG irhYbB\"><label class=\"sc-VigVT cxhBLs\"><div class=\"sc-jTzLTM lfdakX\"><span><span><span class=\"sc-iwsKbI LKihQ\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" focusable=\"false\" role=\"presentation\"><g fill=\"currentColor\" fill-rule=\"evenodd\"><path d=\"M11 7h2v11h-2zM6 5h12v2H6z\"/><path d=\"M5 5h2v3H5zm5 13h4v2h-4zm7-13h2v3h-2z\"/></g></svg></span> Text in Esperanto</span></span><span class=\"sc-fjdhpX karbfX\" role=\"presentation\">*</span></div></label><div class=\"sc-EHOje iEnQym\"><div class=\"sc-bxivhb kQgNxi\"><div class=\"sc-ifAKCX cZgida\"><textarea class=\"sc-jzJRlG cZCxJB\" required=\"\" autofocus=\"\" spellcheck=\"true\" maxLength=\"2048\">Mi loĝas en Sao Paulo</textarea></div></div></div></div></fieldset><fieldset><button class=\"sc-chPdSV jgTBQU\" disabled=\"\" spacing=\"default\" type=\"submit\"><span style=\"align-self:center;display:inline-flex;flex-wrap:nowrap;max-width:100%;position:relative\"><span style=\"align-items:center;align-self:center;flex:1 1 auto;margin:0 4px;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;transition:opacity 0.3s;opacity:1\">Analyze</span></span></button></fieldset></div>"
