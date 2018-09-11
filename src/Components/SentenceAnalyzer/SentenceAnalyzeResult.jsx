@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import Button from '@atlaskit/button';
 import EditFilledIcon from '@atlaskit/icon/glyph/edit-filled';
-
+import TestUtils from '../../Lib/TestUtils'
 import { InlineWord } from './Word'
 
-const styles = {
+export const STYLES = {
   noResults: {
     marginTop: '20px',
     marginBottom: '10px'
@@ -20,10 +20,10 @@ const styles = {
   }
 }
 
-const NoResultsFoundView = (props) => (
-  <div style={styles.noResults}>
+export const NoResultsFoundView = () => (
+  <div style={STYLES.noResults}>
     <span className='text'>
-      No analyzes results to show for you query. <br />
+      No analyzes results to show for you query.<br />
       Switch to Writing Mode (<EditFilledIcon/>) to type some Esperanto sentences.
     </span>
   </div>
@@ -57,24 +57,23 @@ class SentenceAnalyzeResult extends Component {
     const BackButton = <Button appearance={'primary'} onClick={onBackClick}>Back</Button>
 
     if (!result.length) {
-      return (<span><NoResultsFoundView /><span style={styles.backBtn}>{BackButton}</span></span>)
+      return (<span><NoResultsFoundView /><span style={STYLES.backBtn}>{BackButton}</span></span>)
     }
 
     return (
-      <div style={styles.wrapper} className='sentence-analyze-result-wrapper'>
+      <div style={STYLES.wrapper} className='sentence-analyze-result-wrapper'>
         <div>
-          <strong><i>Analyze Results:</i> </strong>
+          <strong style={STYLES.title}>Analyze Results</strong>
 
           <div className='words-list'>
             {this.renderWords(result)}
           </div>
         </div>
 
-        <p style={styles.backBtn}>{BackButton}</p>
+        <p style={STYLES.backBtn}>{BackButton}</p>
       </div>
     )
   }
 }
 
-export {NoResultsFoundView}
 export default SentenceAnalyzeResult;
