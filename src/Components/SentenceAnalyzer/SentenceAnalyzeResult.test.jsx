@@ -62,7 +62,7 @@ describe('<NoResultsFoundView />', () => {
     it('renders the text wrapper element', () => {
       renderComponent((component) => {
         const textNode = component.props.children
-  
+
         expect(component.props.className).toEqual('text')
       })
     })
@@ -70,7 +70,7 @@ describe('<NoResultsFoundView />', () => {
     it('renders the proper text content', () => {
       renderComponent((component) => {
         const textNode = component.props.children
-  
+
         // I18n messages
         expect(textNode[0]).toEqual('No analyzes results to show for you query.')
         expect(textNode[2]).toEqual('Switch to Writing Mode (')
@@ -85,7 +85,7 @@ describe('<NoResultsFoundView />', () => {
 describe('<SentenceAnalyzeResult />', () => {
   it('renders <SentenceAnalyzeResult /> without crashing', () => {
     const div = document.createElement('div')
-  
+
     ReactDOM.render(<SentenceAnalyzeResult />, div)
     ReactDOM.unmountComponentAtNode(div)
   })
@@ -99,11 +99,29 @@ describe('<SentenceAnalyzeResult />', () => {
     TestUtils.createTestComponent(<SentenceAnalyzeResult {...props} />, callbackFn)
   }
 
+  it('Should call `onBackClick` when <Button /> is clicked', () => {
+    renderComponent((component, next) => {
+      const callback = jest.fn()
+      component.props = { onBackClick: callback }
+      // Render the component
+      const renderedComponent = component.render()
+      const { children } = renderedComponent.props.children[1].props // Find <Button />
+
+      expect(children.props.onClick).toEqual(callback)
+
+      children.props.onClick() // Dispatch the event
+
+      expect(callback.mock.calls.length).toEqual(1)
+
+      next()
+    })
+  })
+
   describe('No results', () => {
     it('Should render <NoResultsFound /> component', () => {
       renderComponent({ result: [] }, (component, next) => {
         const renderedComponent = component.render()
-  
+
         expect(renderedComponent.type).toEqual('span')
         // For some reason we don't have `renderedComponent.props.children[0].type`
         // that is supposed to be 'NoResultsFound', so we kind of 'fake' this test just checking
@@ -137,7 +155,7 @@ describe('<SentenceAnalyzeResult />', () => {
 
     it('Should render <span> component to wrap the <Button />', () => {
       renderComponent({ result: [] }, (component, next) => {
-        const renderedComponent = component.render()  
+        const renderedComponent = component.render()
 
         expect(renderedComponent.props.children[1].type).toEqual('span')
         next()
@@ -249,7 +267,7 @@ describe('<SentenceAnalyzeResult />', () => {
           expect(word.type.name).toEqual('InlineWord')
         })
 
-        next()  
+        next()
       })
     })
 
@@ -265,7 +283,7 @@ describe('<SentenceAnalyzeResult />', () => {
           expect(word.props.grammarClass).toEqual(SAMPLE_TEST_RESULTS[index].value)
         })
 
-        next()  
+        next()
       })
     })
 
@@ -293,7 +311,7 @@ describe('<SentenceAnalyzeResult />', () => {
 
     it('Should render <p> component to wrap the <Button />', () => {
       renderComponent({ result: SIMPLE_SAMPLE_RESULTS }, (component, next) => {
-        const renderedComponent = component.render()  
+        const renderedComponent = component.render()
 
         expect(renderedComponent.props.children[1].type).toEqual('p')
         next()
