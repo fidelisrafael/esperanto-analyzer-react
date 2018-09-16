@@ -7,7 +7,7 @@ import SearchIcon from '@atlaskit/icon/glyph/search';
 import SentenceAnalyzeResult from './SentenceAnalyzeResult'
 import SentenceTextArea from './SentenceTextArea'
 
-const styles = {
+export const STYLES = {
   spinner: {
     margin: '20px 0',
     background: '#f3eedd',
@@ -42,22 +42,22 @@ const SentenceAnalyzerView = (props) => {
 
   return (
     <div>
-      {isLoading && <div style={styles.spinner}>
-        <Spinner size='medium' /><span style={styles.spinner_text}>Analyzing...</span>
+      {isLoading && <div style={STYLES.spinner}>
+        <Spinner size='medium' /><span style={STYLES.spinner_text}>Analyzing...</span>
       </div>}
 
-      {!isLoading && <div style={styles.status}>
+      {!isLoading && <div style={STYLES.status}>
         <ToggleStateless
           label="Change Visualization"
           size="large"
-          onChange={onToggleChange}
           isChecked={isEditing}
+          onChange={onToggleChange}
           isDisabled={toggleIsDisabled}
           isDefaultChecked={isEditing}
         />
         <span>
           {isEditing && <span><EditFilledIcon /> Write Mode</span>}
-          {!isEditing && <span>&nbsp;<SearchIcon /> Inspection Mode</span>}
+          {!isEditing && <span><SearchIcon /> Inspection Mode</span>}
         </span>
       </div>}
 
