@@ -378,7 +378,7 @@ describe('<PageHome />', () => {
           const { bottomBar } = renderedHome.props.children[0].props
 
           // We are testing this NOW because we plan to have i18n sonner in the interface
-          expect(bottomBar.props.children[0].trim()).toEqual("Type any text in Esperanto in the field below and click in the button 'Analyze' to perform a simple morphological analyses on it.")
+          expect(bottomBar.props.children[0].trim()).toEqual("Type any text in Esperanto below and click on the button 'Analyze' to perform a simple morphological analysis on it.")
           expect(bottomBar.props.children[2].trim()).toEqual("You can click")
           expect(bottomBar.props.children[3].props.children.trim()).toEqual("here")
           expect(bottomBar.props.children[4].trim()).toEqual("to try a sample text.")
