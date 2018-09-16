@@ -109,7 +109,7 @@ class PageHome extends Component {
         <PageHeader
           bottomBar ={
             <span>
-              Type any text in Esperanto in the field below and click in the button 'Analyze' to perform a simple morphological analyses on it. <br />
+              Type any text in Esperanto below and click on the button 'Analyze' to perform a simple morphological analysis on it. <br />
               You can click <span onClick={this.setSampleSentence} style={styles.bottomBar}>here</span> to try a sample text.
             </span>}
         >

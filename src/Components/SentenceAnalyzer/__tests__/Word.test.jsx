@@ -14,7 +14,7 @@ describe('<Word />', () => {
     expect(TestUtils.createTestComponent(<Word />)).toBeDefined()
   })
 
-  const renderComponent = (props = {}) => {
+  const mountComponent = (props = {}) => {
     // We could just do: `return Word(props)` but we want to have a more React API-centralized object
     const reactCompenent = <Word />
 
@@ -23,7 +23,7 @@ describe('<Word />', () => {
   }
 
   it('Should renders a @atlaskit <Tag> element', () => {
-    const component = renderComponent()
+    const component = mountComponent()
 
     // The way AtlasKit components sometimes are composition of elements
     expect(component.type.displayName).toEqual('WithAnalyticsContext(WithAnalyticsEvents(Tag))')
@@ -31,31 +31,31 @@ describe('<Word />', () => {
 
   describe('rendered <Tag />', () => {
     it('should be `standard` when no `grammarClass` is provided', () => {
-      const component = renderComponent()
+      const component = mountComponent()
 
       expect(component.props.color).toEqual('standard')
     })
 
     it('should use the color mapped to given `grammarClass`', () => {
-      const component = renderComponent({ grammarClass: 'verb' })
+      const component = mountComponent({ grammarClass: 'verb' })
 
       expect(component.props.color).toEqual(COLOR_BY_GRAMMAR_CLASS.verb)
     })
 
     it('should use the "default" color when given `grammarClass` does not exist', () => {
-      const component = renderComponent({ grammarClass: 'nekredeble' })
+      const component = mountComponent({ grammarClass: 'nekredeble' })
 
       expect(component.props.color).toEqual('standard')
     })
 
     it('should renders the given `content` in <Tag `text` />', () => {
-      const component = renderComponent({ content: 'skatolo' })
+      const component = mountComponent({ content: 'skatolo' })
 
       expect(component.props.text).toEqual('skatolo')
     })
 
     it('should render with proper styles', () => {
-      const component = renderComponent()
+      const component = mountComponent()
 
       expect(component.props.style).toEqual(STYLES.word)
     })
@@ -63,7 +63,7 @@ describe('<Word />', () => {
 
   describe('DOM Rendered', () => {
     it('Should just render the word withour the `grammarClass`', () => {
-      const component = renderComponent(TEST_PROPS)
+      const component = mountComponent(TEST_PROPS)
 
       const expected = "<div class=\"sc-dnqmqq lkXyJm\" color=\"grey\"><span class=\"sc-htpNat gPJvVz\" tabindex=\"-1\" color=\"grey\" role=\"\"><span class=\"sc-bxivhb dMExre\" color=\"grey\">Saluton!</span></span></div>"
 
@@ -77,7 +77,7 @@ describe('<InlineWord />', () => {
     expect(TestUtils.createTestComponent(<InlineWord />)).toBeDefined()
   })
 
-  const renderComponent = (props = {}, callbackFn) => {
+  const mountComponent = (props = {}, callbackFn) => {
     if(typeof(props) == 'function' && !callbackFn) {
       callbackFn = props
       props = {}
@@ -87,7 +87,7 @@ describe('<InlineWord />', () => {
   }
 
   it('Should renders an @atlaskit <InlineDialog> element', () => {
-    renderComponent((component, next) => {
+    mountComponent((component, next) => {
       expect(component.render().type.displayName).toEqual('WithAnalyticsContext(WithAnalyticsEvents(InlineDialog))')
 
       next()
@@ -95,28 +95,28 @@ describe('<InlineWord />', () => {
   })
 
   it('Should renders <InlineDialog /> closed initially', () => {
-    renderComponent((component, next) => {
+    mountComponent((component, next) => {
       expect(component.render().props.isOpen).toEqual(false)
       next()
     })
   })
 
   it('Should renders <InlineDialog /> with placement "bottom-start"', () => {
-    renderComponent((component, next) => {
+    mountComponent((component, next) => {
       expect(component.render().props.placement).toEqual('bottom-start')
       next()
     })
   })
 
   it('Should rendes the <span> that holds the click event', () => {
-    renderComponent((component, next) => {
+    mountComponent((component, next) => {
       expect(component.render().props.children.type).toEqual('span')
       next()
     })
   })
 
   it('Should renders a <Word /> component inside span', () => {
-    renderComponent((component, next) => {
+    mountComponent((component, next) => {
       const { children } = component.render().props
 
       expect(children.props.children.type.name).toEqual('Word')
@@ -125,7 +125,7 @@ describe('<InlineWord />', () => {
   })
 
   it('Should pass the state as property to <InlineDialog />', () => {
-    renderComponent((component, next) => {
+    mountComponent((component, next) => {
       component.setState({ dialogIsOpen: true })
 
       expect(component.render().props.isOpen).toEqual(true)
@@ -134,7 +134,7 @@ describe('<InlineWord />', () => {
   })
 
   it('Should opens the <InlineDialog /> when clicking in the <span>', () => {
-    renderComponent((component, next) => {
+    mountComponent((component, next) => {
       const rendered = component.render()
 
       expect(rendered.props.isOpen).toEqual(false)
@@ -148,7 +148,7 @@ describe('<InlineWord />', () => {
   })
 
   it('Should closes the <InlineDialog /> when clicking in the content', () => {
-    renderComponent((component, next) => {
+    mountComponent((component, next) => {
       component.setState({ dialogIsOpen: true })
       const rendered = component.render()
 
@@ -165,7 +165,7 @@ describe('<InlineWord />', () => {
 
   describe('DOM Rendered', () => {
     it('Should not display the <InlineDialog> `content` if `state.dialogIsOpen` is false', () => {
-      renderComponent(TEST_PROPS, (component, next) => {
+      mountComponent(TEST_PROPS, (component, next) => {
         component.setState({ dialogIsOpen: false })
 
         expect(renderToStaticMarkup(component.render())).toEqual(EXPECTED_OUTPUT_CLOSED)
@@ -174,7 +174,7 @@ describe('<InlineWord />', () => {
     })
 
     it('Should display the <InlineDialog> `content` if `state.dialogIsOpen` is true', () => {
-      renderComponent(TEST_PROPS, (component, next) => {
+      mountComponent(TEST_PROPS, (component, next) => {
         component.setState({ dialogIsOpen: true })
 
         expect(renderToStaticMarkup(component.render())).toEqual(EXPECTED_OUTPUT_OPEN)
@@ -183,7 +183,7 @@ describe('<InlineWord />', () => {
     })
 
     it('Should opens the <InlineDialog /> when clicking in the <span>', () => {
-      renderComponent(TEST_PROPS, (component, next) => {
+      mountComponent(TEST_PROPS, (component, next) => {
         component.setState({ dialogIsOpen: false })
         const renderedComponent = component.render()
 
@@ -199,7 +199,7 @@ describe('<InlineWord />', () => {
     })
 
     it('Should closes the <InlineDialog /> when clicking in the content', () => {
-      renderComponent(TEST_PROPS, (component, next) => {
+      mountComponent(TEST_PROPS, (component, next) => {
         component.setState({ dialogIsOpen: true })
         const renderedComponent = component.render()
 
@@ -217,7 +217,7 @@ describe('<InlineWord />', () => {
 
   describe('#toggleDialogOpen()', () => {
     it('Should invert the value of `state.dialogIsOpen`', () => {
-      renderComponent((component, next) => {
+      mountComponent((component, next) => {
         component.setState({ dialogIsOpen: false })
         component.toggleDialogOpen()
 
@@ -227,7 +227,7 @@ describe('<InlineWord />', () => {
     })
 
     it('Should pass the state as property to <InlineDialog />', () => {
-      renderComponent((component, next) => {
+      mountComponent((component, next) => {
         component.setState({ dialogIsOpen: true })
         component.toggleDialogOpen()
 

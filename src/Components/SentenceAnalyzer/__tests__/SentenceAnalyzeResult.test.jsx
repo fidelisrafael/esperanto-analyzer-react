@@ -30,7 +30,7 @@ const SAMPLE_EMPTY_HTML_OUTPUT = '<span><div style="margin-top:20px;margin-botto
 const SAMPLE_SIMPLE_HTML_OUTPUT = '<div style="margin:20px 0;border-top:2px solid #e4dcca66;padding-top:20px;padding-bottom:20px" class="sentence-analyze-result-wrapper"><div><strong>Analyze Results</strong><div class="words-list"><span class="wordSpan"><div class="sc-kAzzGY cBPlFT" color="red"><span class="sc-VigVT hdtdWC" tabindex="-1" color="red" role=""><span class="sc-jTzLTM jIqVYU" color="red">mia</span></span></div></span><span class="wordSpan"><div class="sc-kAzzGY cBPlFT" color="purpleLight"><span class="sc-VigVT ghzVwB" tabindex="-1" color="purpleLight" role=""><span class="sc-jTzLTM jIqVYU" color="purpleLight">nomo</span></span></div></span></div></div><p style="margin-top:50px"><button class="sc-bZQynM jPpwhv" spacing="default" type="button"><span style="align-self:center;display:inline-flex;flex-wrap:nowrap;max-width:100%;position:relative"><span style="align-items:center;align-self:center;flex:1 1 auto;margin:0 4px;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;transition:opacity 0.3s;opacity:1">Back</span></span></button></p></div>'
 
 describe('<NoResultsFoundView />', () => {
-  const renderComponent = (props = {}) => {
+  const mountComponent = (props = {}) => {
     // We could just do: `return Word(props)` but we want to have a more React API-centralized object
     const reactCompenent = <NoResultsFoundView />
 
@@ -46,7 +46,7 @@ describe('<NoResultsFoundView />', () => {
   })
 
   it('Should uses the proper styles', () => {
-    renderComponent((component) => {
+    mountComponent((component) => {
       expect(component.props.style).toEqual(STYLES.noResults)
     })
   })
@@ -60,7 +60,7 @@ describe('<NoResultsFoundView />', () => {
 
   describe('I18n', () => {
     it('renders the text wrapper element', () => {
-      renderComponent((component) => {
+      mountComponent((component) => {
         const textNode = component.props.children
 
         expect(component.props.className).toEqual('text')
@@ -68,7 +68,7 @@ describe('<NoResultsFoundView />', () => {
     })
 
     it('renders the proper text content', () => {
-      renderComponent((component) => {
+      mountComponent((component) => {
         const textNode = component.props.children
 
         // I18n messages
@@ -90,7 +90,7 @@ describe('<SentenceAnalyzeResult />', () => {
     ReactDOM.unmountComponentAtNode(div)
   })
 
-  const renderComponent = (props = {}, callbackFn) => {
+  const mountComponent = (props = {}, callbackFn) => {
     if(typeof(props) == 'function' && !callbackFn) {
       callbackFn = props
       props = {}
@@ -100,7 +100,7 @@ describe('<SentenceAnalyzeResult />', () => {
   }
 
   it('Should call `onBackClick` when <Button /> is clicked', () => {
-    renderComponent((component, next) => {
+    mountComponent((component, next) => {
       const callback = jest.fn()
       component.props = { onBackClick: callback }
       // Render the component
@@ -119,7 +119,7 @@ describe('<SentenceAnalyzeResult />', () => {
 
   describe('No results', () => {
     it('Should render <NoResultsFound /> component', () => {
-      renderComponent({ result: [] }, (component, next) => {
+      mountComponent({ result: [] }, (component, next) => {
         const renderedComponent = component.render()
 
         expect(renderedComponent.type).toEqual('span')
@@ -132,7 +132,7 @@ describe('<SentenceAnalyzeResult />', () => {
     })
 
     it('Should render <Button /> component with `primary` color', () => {
-      renderComponent({ result: [] }, (component, next) => {
+      mountComponent({ result: [] }, (component, next) => {
         const renderedComponent = component.render()
         const { props } = renderedComponent.props.children[1]
 
@@ -144,7 +144,7 @@ describe('<SentenceAnalyzeResult />', () => {
     })
 
     it('Should renders the proper text on <Button /> component', () => {
-      renderComponent({ result: [] }, (component, next) => {
+      mountComponent({ result: [] }, (component, next) => {
         const renderedComponent = component.render()
         const { children } = renderedComponent.props.children[1].props
 
@@ -154,7 +154,7 @@ describe('<SentenceAnalyzeResult />', () => {
     })
 
     it('Should render <span> component to wrap the <Button />', () => {
-      renderComponent({ result: [] }, (component, next) => {
+      mountComponent({ result: [] }, (component, next) => {
         const renderedComponent = component.render()
 
         expect(renderedComponent.props.children[1].type).toEqual('span')
@@ -163,7 +163,7 @@ describe('<SentenceAnalyzeResult />', () => {
     })
 
     it('Should render <span> component with proper `style`', () => {
-      renderComponent({ result: [] }, (component, next) => {
+      mountComponent({ result: [] }, (component, next) => {
         const {children} = component.render().props
 
         expect(children[1].props.style).toEqual(STYLES.backBtn)
@@ -173,7 +173,7 @@ describe('<SentenceAnalyzeResult />', () => {
 
     describe('DOM Rendered', () => {
       it('Should output expected HTML', () => {
-        renderComponent({ result: [] }, (component, next) => {
+        mountComponent({ result: [] }, (component, next) => {
           expect(renderToStaticMarkup(component.render())).toEqual(SAMPLE_EMPTY_HTML_OUTPUT)
           next()
         })
@@ -183,14 +183,14 @@ describe('<SentenceAnalyzeResult />', () => {
 
   describe('With results', () => {
     it('Should receives the results in `props`', () => {
-      renderComponent({ result: SAMPLE_TEST_RESULTS }, (component, next) => {
+      mountComponent({ result: SAMPLE_TEST_RESULTS }, (component, next) => {
         expect(component.props.result).toEqual(SAMPLE_TEST_RESULTS)
         next()
       })
     })
 
     it('Should render the wrapper <div> component', () => {
-      renderComponent({ result: SAMPLE_TEST_RESULTS }, (component, next) => {
+      mountComponent({ result: SAMPLE_TEST_RESULTS }, (component, next) => {
         const renderedComponent = component.render()
 
         expect(renderedComponent.type).toEqual('div')
@@ -200,7 +200,7 @@ describe('<SentenceAnalyzeResult />', () => {
     })
 
     it('Should render two children inside <div>', () => {
-      renderComponent({ result: SAMPLE_TEST_RESULTS }, (component, next) => {
+      mountComponent({ result: SAMPLE_TEST_RESULTS }, (component, next) => {
         const renderedComponent = component.render()
 
         expect(renderedComponent.props.children).toHaveLength(2)
@@ -209,7 +209,7 @@ describe('<SentenceAnalyzeResult />', () => {
     })
 
     it('Should render the main wrapper <div> with proper styles', () => {
-      renderComponent({ result: SAMPLE_TEST_RESULTS }, (component, next) => {
+      mountComponent({ result: SAMPLE_TEST_RESULTS }, (component, next) => {
         const renderedComponent = component.render()
 
         expect(renderedComponent.props.style).toEqual(STYLES.wrapper)
@@ -218,7 +218,7 @@ describe('<SentenceAnalyzeResult />', () => {
     })
 
     it('Should render <strong> element', () => {
-      renderComponent({ result: SAMPLE_TEST_RESULTS }, (component, next) => {
+      mountComponent({ result: SAMPLE_TEST_RESULTS }, (component, next) => {
         const renderedComponent = component.render()
         const { children } = renderedComponent.props.children[0].props
 
@@ -228,7 +228,7 @@ describe('<SentenceAnalyzeResult />', () => {
     })
 
     it('Should render the proper text in <strong> element', () => {
-      renderComponent({ result: SAMPLE_TEST_RESULTS }, (component, next) => {
+      mountComponent({ result: SAMPLE_TEST_RESULTS }, (component, next) => {
         const renderedComponent = component.render()
         const { children } = renderedComponent.props.children[0].props
 
@@ -238,7 +238,7 @@ describe('<SentenceAnalyzeResult />', () => {
     })
 
     it('Should renders a <div> to render all <InlineWord /> components', () => {
-      renderComponent({ result: SAMPLE_TEST_RESULTS }, (component, next) => {
+      mountComponent({ result: SAMPLE_TEST_RESULTS }, (component, next) => {
         const renderedComponent = component.render()
         const { children } = renderedComponent.props.children[0].props
 
@@ -249,7 +249,7 @@ describe('<SentenceAnalyzeResult />', () => {
     })
 
     it('Should renders the correct ammount <InlineWord /> inside "word-list" <div>', () => {
-      renderComponent({ result: SAMPLE_TEST_RESULTS }, (component, next) => {
+      mountComponent({ result: SAMPLE_TEST_RESULTS }, (component, next) => {
         const renderedComponent = component.render()
         const { children } = renderedComponent.props.children[0].props
 
@@ -259,7 +259,7 @@ describe('<SentenceAnalyzeResult />', () => {
     })
 
     it('Should renders ONLY <InlineWord /> for result set', () => {
-      renderComponent({ result: SAMPLE_TEST_RESULTS }, (component, next) => {
+      mountComponent({ result: SAMPLE_TEST_RESULTS }, (component, next) => {
         const renderedComponent = component.render()
         const { children } = renderedComponent.props.children[0].props
 
@@ -271,13 +271,14 @@ describe('<SentenceAnalyzeResult />', () => {
       })
     })
 
-    it('Should renders all <InlineWord /> for result set', () => {
-      renderComponent({ result: SAMPLE_TEST_RESULTS }, (component, next) => {
+    it('Should renders all <InlineWord /> with the right properties for given result set', () => {
+      mountComponent({ result: SAMPLE_TEST_RESULTS }, (component, next) => {
         const renderedComponent = component.render()
         const { children } = renderedComponent.props.children[0].props
         const inlineWords = children[1].props.children
 
         inlineWords.forEach((word, index) => {
+          // Bunch of tests since we are testing the same context
           expect(word.key).toEqual(index.toString())
           expect(word.props.content).toEqual(SAMPLE_TEST_RESULTS[index].word)
           expect(word.props.grammarClass).toEqual(SAMPLE_TEST_RESULTS[index].value)
@@ -288,7 +289,7 @@ describe('<SentenceAnalyzeResult />', () => {
     })
 
     it('Should render <Button /> component with `primary` color', () => {
-      renderComponent({ result: SAMPLE_TEST_RESULTS }, (component, next) => {
+      mountComponent({ result: SAMPLE_TEST_RESULTS }, (component, next) => {
         const renderedComponent = component.render()
         const { props } = renderedComponent.props.children[1]
 
@@ -300,7 +301,7 @@ describe('<SentenceAnalyzeResult />', () => {
     })
 
     it('Should renders the proper text on <Button /> component', () => {
-      renderComponent({ result: SIMPLE_SAMPLE_RESULTS }, (component, next) => {
+      mountComponent({ result: SIMPLE_SAMPLE_RESULTS }, (component, next) => {
         const renderedComponent = component.render()
         const { children } = renderedComponent.props.children[1].props
 
@@ -310,7 +311,7 @@ describe('<SentenceAnalyzeResult />', () => {
     })
 
     it('Should render <p> component to wrap the <Button />', () => {
-      renderComponent({ result: SIMPLE_SAMPLE_RESULTS }, (component, next) => {
+      mountComponent({ result: SIMPLE_SAMPLE_RESULTS }, (component, next) => {
         const renderedComponent = component.render()
 
         expect(renderedComponent.props.children[1].type).toEqual('p')
@@ -319,7 +320,7 @@ describe('<SentenceAnalyzeResult />', () => {
     })
 
     it('Should render <p> component with proper `style`', () => {
-      renderComponent({ result: SIMPLE_SAMPLE_RESULTS }, (component, next) => {
+      mountComponent({ result: SIMPLE_SAMPLE_RESULTS }, (component, next) => {
         const {children} = component.render().props
 
         expect(children[1].props.style).toEqual(STYLES.backBtn)
@@ -329,7 +330,7 @@ describe('<SentenceAnalyzeResult />', () => {
 
     describe('DOM Rendered', () => {
       it('Should output expected HTML', () => {
-        renderComponent({ result: SIMPLE_SAMPLE_RESULTS }, (component, next) => {
+        mountComponent({ result: SIMPLE_SAMPLE_RESULTS }, (component, next) => {
           expect(renderToStaticMarkup(component.render())).toEqual(SAMPLE_SIMPLE_HTML_OUTPUT)
           next()
         })
@@ -339,7 +340,7 @@ describe('<SentenceAnalyzeResult />', () => {
 
   describe('#renderWords()', () => {
     it('Should return empty array when no `words` parameter are given', () => {
-      renderComponent((component, next) => {
+      mountComponent((component, next) => {
         const words = component.renderWords([])
 
         expect(words).toEqual([])
@@ -348,7 +349,7 @@ describe('<SentenceAnalyzeResult />', () => {
     })
 
     it('Should return an array of <InlineWord /> with provided data', () => {
-      renderComponent((component, next) => {
+      mountComponent((component, next) => {
         const words = component.renderWords(SIMPLE_SAMPLE_RESULTS)
 
         expect(words).toEqual([

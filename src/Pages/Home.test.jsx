@@ -7,7 +7,7 @@ jest.mock('./../Lib/API');
 
 const SAMPLE_SENTENCE_JSON_RESPONSE = [{"word":"Antaŭ","value":"Adverb"},{"word":"la","value":"Article"},{"word":"alveno","value":"Noun"},{"word":"de","value":"Preposition"},{"word":"portugaloj","value":"Noun"},{"word":"multaj","value":"Adjective"},{"word":"homoj","value":"Noun"},{"word":"loĝis","value":"Verb"},{"word":"tie","value":"Adverb"},{"word":"kie","value":"Adverb"},{"word":"hodiaŭ","value":"Adverb"},{"word":"estas","value":"Verb"},{"word":"Brazilo","value":"Noun"}]
 
-const withTestComponent = (callbackFn, patchAPI=true) => {
+const mountComponent = (callbackFn, patchAPI=true) => {
   var componentCallbackFn = callbackFn
 
   if(patchAPI) {
@@ -22,7 +22,7 @@ const withTestComponent = (callbackFn, patchAPI=true) => {
 
 describe('<PageHome />', () => {
   it('renders without crashing', () => {
-    withTestComponent((home, next) => {
+    mountComponent((home, next) => {
       expect(home).toBeDefined()
       next()
     })
@@ -30,7 +30,7 @@ describe('<PageHome />', () => {
 
   describe('MINIMUM_VALID_SENTENCE_LENGTH', () => {
     it('has the right value', () => {
-      withTestComponent((home, next) => {
+      mountComponent((home, next) => {
         expect(home.MINIMUM_VALID_SENTENCE_LENGTH).toEqual(2)
         next()
       })
@@ -39,7 +39,7 @@ describe('<PageHome />', () => {
 
   describe('SAMPLE_SENTENCE', () => {
     it('has the right value', () => {
-      withTestComponent((home, next) => {
+      mountComponent((home, next) => {
         expect(home.SAMPLE_SENTENCE).toEqual('Antaŭ la alveno de portugaloj, multaj homoj loĝis tie kie hodiaŭ estas Brazilo.')
         next()
       })
@@ -48,7 +48,7 @@ describe('<PageHome />', () => {
 
   describe('#setSampleSentence()', () => {
     it('Should do nothing if state.sentence is the sample text and user is not editing the sentence', () => {
-      withTestComponent((home, next) => {
+      mountComponent((home, next) => {
         home.setState({ sentence: home.SAMPLE_SENTENCE, isEditing: false })
 
         expect(home.setSampleSentence()).toEqual(false)
@@ -57,7 +57,7 @@ describe('<PageHome />', () => {
     })
 
     it('Should update state.sentence', () => {
-      withTestComponent((home, next) => {
+      mountComponent((home, next) => {
         // First test to make sure sentence is empty and will change
         expect(home.state.sentence).toEqual('')
 
@@ -69,7 +69,7 @@ describe('<PageHome />', () => {
     })
 
     it('Should update state.analyzesResults', () => {
-      withTestComponent((home, next) => {
+      mountComponent((home, next) => {
         home.setSampleSentence()
 
         expect(home.state.analyzesResults).toEqual(SAMPLE_SENTENCE_JSON_RESPONSE)
@@ -78,7 +78,7 @@ describe('<PageHome />', () => {
     })
 
     it('Should update `requestSent` class property', () => {
-      withTestComponent((home, next) => {
+      mountComponent((home, next) => {
         home.setSampleSentence()
 
         expect(home.requestSent).toEqual(true)
@@ -89,7 +89,7 @@ describe('<PageHome />', () => {
 
   describe('#handleSentenceChange()', () => {
     it('Should update state.sentence', () => {
-      withTestComponent((home, next) => {
+      mountComponent((home, next) => {
         home.handleSentenceChange({ target: { value: 'Multajn' }})
 
         expect(home.state.sentence).toEqual('Multajn')
@@ -100,7 +100,7 @@ describe('<PageHome />', () => {
 
   describe('#onSubmit', () => {
     it('should not update `state.isLoading` if a false parameter is given', () => {
-      withTestComponent((home, next) => {
+      mountComponent((home, next) => {
         home.setState({ isLoading: true })
         home.onSubmit(false)
 
@@ -110,7 +110,7 @@ describe('<PageHome />', () => {
     })
 
     it('should update `state.isLoading` if no parameter is given', () => {
-      withTestComponent((home, next) => {
+      mountComponent((home, next) => {
         home.setState({ isLoading: true })
         home.onSubmit()
 
@@ -120,7 +120,7 @@ describe('<PageHome />', () => {
     })
 
     it('Should update class property: `requestSent`', () => {
-      withTestComponent((home, next) => {
+      mountComponent((home, next) => {
         home.requestSent = false
         home.onSubmit()
 
@@ -130,7 +130,7 @@ describe('<PageHome />', () => {
     })
 
     it('Should call `updateAnalyzesResults()` function', () => {
-      withTestComponent((home, next) => {
+      mountComponent((home, next) => {
         home.updateAnalyzesResults = jest.fn()
         home.onSubmit()
 
@@ -140,7 +140,7 @@ describe('<PageHome />', () => {
     })
 
     it('Should call `updateAnalyzesResults()` function with valid data', () => {
-      withTestComponent((home, next) => {
+      mountComponent((home, next) => {
         home.updateAnalyzesResults = jest.fn()
         home.onSubmit()
 
@@ -150,7 +150,7 @@ describe('<PageHome />', () => {
     })
 
     it('Should call `updateAnalyzesResults()` function with data provided in `onSubmit()`', () => {
-      withTestComponent((home, next) => {
+      mountComponent((home, next) => {
         home.updateAnalyzesResults = jest.fn()
         home.onSubmit(false)
 
@@ -162,7 +162,7 @@ describe('<PageHome />', () => {
 
   describe('#updateAnalyzesResults()', () => {
     it('Should update state.analyzesResults', () => {
-      withTestComponent((home, next) => {
+      mountComponent((home, next) => {
         home.updateAnalyzesResults([{'word': 'mia', 'value': 'pronoun'}])
 
         expect(home.state.analyzesResults).toEqual([{'word': 'mia', 'value': 'pronoun'}])
@@ -171,7 +171,7 @@ describe('<PageHome />', () => {
     })
 
     it('Should update state.analyzesResults with empty([]) array if no parameters are given', () => {
-      withTestComponent((home, next) => {
+      mountComponent((home, next) => {
         home.updateAnalyzesResults()
 
         expect(home.state.analyzesResults).toEqual([])
@@ -180,7 +180,7 @@ describe('<PageHome />', () => {
     })
 
     it('Should update state.isEditing as `false`', () => {
-      withTestComponent((home, next) => {
+      mountComponent((home, next) => {
         home.updateAnalyzesResults([{'word': 'mia', 'value': 'pronoun'}])
 
         expect(home.state.isEditing).toEqual(false)
@@ -189,7 +189,7 @@ describe('<PageHome />', () => {
     })
 
     it('Should update state.isLoading as `false`', () => {
-      withTestComponent((home, next) => {
+      mountComponent((home, next) => {
         home.updateAnalyzesResults([{'word': 'mia', 'value': 'pronoun'}])
 
         expect(home.state.isLoading).toEqual(false)
@@ -200,7 +200,7 @@ describe('<PageHome />', () => {
 
   describe('#requestSentenceAnalyze()', () => {
     it('should call #analyzeSentenceAPIRequest()', () => {
-      withTestComponent((home, next) => {
+      mountComponent((home, next) => {
         home.analyzeSentenceAPIRequest = jest.fn((sentence, fn) => (fn(SAMPLE_SENTENCE_JSON_RESPONSE)))
 
         home.requestSentenceAnalyze('Saluton!')
@@ -212,7 +212,7 @@ describe('<PageHome />', () => {
     })
 
     it('should invokes the callback function sent as parameter', () => {
-      withTestComponent((home, next) => {
+      mountComponent((home, next) => {
         const callbackFn = jest.fn()
 
         home.requestSentenceAnalyze('Saluton!', callbackFn)
@@ -226,7 +226,7 @@ describe('<PageHome />', () => {
 
   describe('#toggleEditing()', () => {
     it('Should update state.isEditing as false if is true', () => {
-      withTestComponent((home, next) => {
+      mountComponent((home, next) => {
         home.setState({ isEditing: true })
         home.toggleEditing()
 
@@ -236,7 +236,7 @@ describe('<PageHome />', () => {
     })
 
     it('Should update state.isEditing as true if is undefined', () => {
-      withTestComponent((home, next) => {
+      mountComponent((home, next) => {
         home.setState({ isEditing: undefined })
         home.toggleEditing()
 
@@ -246,7 +246,7 @@ describe('<PageHome />', () => {
     })
 
     it('Should update state.isEditing as false if is true', () => {
-      withTestComponent((home, next) => {
+      mountComponent((home, next) => {
         home.setState({ isEditing: true })
         home.toggleEditing()
 
@@ -258,7 +258,7 @@ describe('<PageHome />', () => {
 
   describe('#toggleIsDisabled()', () => {
     it('should returns `true` if request was never sent', () => {
-      withTestComponent((home, next) => {
+      mountComponent((home, next) => {
         home.requestSent = false
         home.setState({ sentence: 'a'.repeat(home.MINIMUM_VALID_SENTENCE_LENGTH) })
 
@@ -268,7 +268,7 @@ describe('<PageHome />', () => {
     })
 
     it('should returns `false` if request was sent before', () => {
-      withTestComponent((home, next) => {
+      mountComponent((home, next) => {
         home.requestSent = true
         home.setState({ sentence: 'a'.repeat(home.MINIMUM_VALID_SENTENCE_LENGTH) })
 
@@ -278,7 +278,7 @@ describe('<PageHome />', () => {
     })
 
     it('should returns `true` if the sentence is not large enough', () => {
-      withTestComponent((home, next) => {
+      mountComponent((home, next) => {
         home.requestSent = true
         home.setState({ sentence: 'a'.repeat(home.MINIMUM_VALID_SENTENCE_LENGTH - 1) })
 
@@ -288,7 +288,7 @@ describe('<PageHome />', () => {
     })
 
     it('should returns `false` if the sentence is large enough', () => {
-      withTestComponent((home, next) => {
+      mountComponent((home, next) => {
         home.requestSent = true
         home.setState({ sentence: 'a'.repeat(home.MINIMUM_VALID_SENTENCE_LENGTH) })
 
@@ -300,7 +300,7 @@ describe('<PageHome />', () => {
 
   describe('#hasMinimumSentence()', () => {
     it('should returns `false` if the sentence is not large enough', () => {
-      withTestComponent((home, next) => {
+      mountComponent((home, next) => {
         home.setState({ sentence: 'a'.repeat(home.MINIMUM_VALID_SENTENCE_LENGTH - 1) })
 
         expect(home.hasMinimumSentence()).toEqual(false)
@@ -309,7 +309,7 @@ describe('<PageHome />', () => {
     })
 
     it('should returns `true` if the sentence is large enough', () => {
-      withTestComponent((home, next) => {
+      mountComponent((home, next) => {
         home.setState({ sentence: 'a'.repeat(home.MINIMUM_VALID_SENTENCE_LENGTH) })
 
         expect(home.hasMinimumSentence()).toEqual(true)
@@ -320,7 +320,7 @@ describe('<PageHome />', () => {
 
   describe('#analyzeSentenceAPIRequest', () => {
     it('Should call the default callback function', () => {
-      withTestComponent((home, next) => {
+      mountComponent((home, next) => {
         API.analyzeSentence = jest.fn((sentence) => {
           return new Promise((resolve, error) => {
             process.nextTick(() => resolve({ json: () => (SAMPLE_SENTENCE_JSON_RESPONSE) }))
@@ -331,7 +331,7 @@ describe('<PageHome />', () => {
           expect(data).toEqual(SAMPLE_SENTENCE_JSON_RESPONSE)
         })
 
-      // This false parameter here tells the function `withTestComponent` to not patch the
+      // This false parameter here tells the function `mountComponent` to not patch the
       // function `analyzeSentenceAPIRequest`, since we will need it here
       }, false)
     })
@@ -339,7 +339,7 @@ describe('<PageHome />', () => {
 
   describe('#render()', () => {
     it('renders <PageHeader /> as children', () => {
-      withTestComponent((home, next) => {
+      mountComponent((home, next) => {
         const renderedHome = home.render()
         const pageHeader = renderedHome.props.children[0]
 
@@ -349,7 +349,7 @@ describe('<PageHome />', () => {
     })
 
     it('renders <SentenceAnalyzerView /> as children', () => {
-      withTestComponent((home, next) => {
+      mountComponent((home, next) => {
         const renderedHome = home.render()
         const sentenceAnalyzerView = renderedHome.props.children[1]
 
@@ -360,7 +360,7 @@ describe('<PageHome />', () => {
 
     describe('<PageHeader />', () => {
       it('should renders <PageHeader /> {bottomBar} properties', () => {
-        withTestComponent((home, next) => {
+        mountComponent((home, next) => {
           const renderedHome = home.render()
           const { bottomBar } = renderedHome.props.children[0].props
 
@@ -373,7 +373,7 @@ describe('<PageHome />', () => {
       })
 
       it('should renders <PageHeader /> {bottomBar} text', () => {
-        withTestComponent((home, next) => {
+        mountComponent((home, next) => {
           const renderedHome = home.render()
           const { bottomBar } = renderedHome.props.children[0].props
 
@@ -390,7 +390,7 @@ describe('<PageHome />', () => {
 
     describe('<SentenceAnalyzerView />', () => {
       const testSentenceAnalyzerProp = (prop, expected) => {
-        withTestComponent((home, next) => {
+        mountComponent((home, next) => {
           const renderedHome = home.render()
           const sentenceAnalyzerView = renderedHome.props.children[1]
 

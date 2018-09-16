@@ -2,13 +2,13 @@ import React from 'react';
 import App from './App';
 import TestUtils from './../../Lib/TestUtils';
 
-const withTestComponent = (callbackFn) => (
+const mountComponent = (callbackFn) => (
   TestUtils.createTestComponent(<App />, callbackFn)
 )
 
 describe('<App />', () => {
   it('renders without crashing', () => {
-    withTestComponent((app, next) => {
+    mountComponent((app, next) => {
       expect(app).toBeDefined()
 
       next()
@@ -16,7 +16,7 @@ describe('<App />', () => {
   });
 
   it('renders a @atlaskit <Page> as root component', () => {
-    withTestComponent((app, next) => {
+    mountComponent((app, next) => {
       const renderedApp = app.render()
 
       expect(renderedApp.type.name).toEqual('Page')
@@ -28,7 +28,7 @@ describe('<App />', () => {
 
   describe('within <Page> root component', () => {
     it('renders exactly 2 children components', () => {
-      withTestComponent((app, next) => {
+      mountComponent((app, next) => {
         const renderedApp = app.render()
   
         expect(renderedApp.props.children).toHaveLength(2)
@@ -38,7 +38,7 @@ describe('<App />', () => {
     })
   
     it('renders a <GithubRibbon /> as first component', () => {
-      withTestComponent((app, next) => {
+      mountComponent((app, next) => {
         const { children } = app.render().props
   
         expect(children[0].type.name).toEqual('GithubRibbon')
@@ -48,7 +48,7 @@ describe('<App />', () => {
     })
 
     it('should render <GithubRibbon /> with the right `href`', () => {
-      withTestComponent((app, next) => {
+      mountComponent((app, next) => {
         const { children } = app.render().props
   
         expect(children[0].props.href).toEqual('https://github.com/fidelisrafael/esperanto-analyzer-react/')
@@ -58,7 +58,7 @@ describe('<App />', () => {
     })
   
     it('renders a <PageHome /> as last component', () => {
-      withTestComponent((app, next) => {
+      mountComponent((app, next) => {
         const { children } = app.render().props
   
         expect(children[1].type.name).toEqual('PageHome')
@@ -68,7 +68,7 @@ describe('<App />', () => {
     })
 
     it('Should sent to <PageHome /> all properties', () => {
-      withTestComponent((app, next) => {
+      mountComponent((app, next) => {
         const secret = Math.random().toString(2)
         app.props = { ping: 'pong', secret: secret }
 
