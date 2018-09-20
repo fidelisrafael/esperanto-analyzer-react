@@ -9,16 +9,19 @@
 #### Development
 
 [![Build Status](https://travis-ci.com/fidelisrafael/esperanto-analyzer-react.svg?token=k5uMpn3U564QqWar8oA1&branch=development)](https://travis-ci.com/fidelisrafael/esperanto-analyzer-react)
+[![codecov](https://codecov.io/gh/fidelisrafael/esperanto-analyzer-react/branch/development/graph/badge.svg?token=Iu4jqn1jyX)](https://codecov.io/gh/fidelisrafael/esperanto-analyzer-react)
 
 #### Master
 
-[![Build Status](https://travis-ci.com/fidelisrafael/esperanto-analyzer-react.svg?token=k5uMpn3U564QqWar8oA1&branch=master)](https://travis-ci.com/fidelisrafael/esperanto-analyzer-react)
+[![Build Status](https://travis-ci.com/fidelisrafael/esperanto-analyzer-react.svg?token=k5uMpn3U564QqWar8oA1&branch=master)](https://travis-ci.com/fidelisrafael/esperanto-analyzer-react) [![codecov](https://codecov.io/gh/fidelisrafael/esperanto-analyzer-react/branch/master/graph/badge.svg?token=Iu4jqn1jyX)](https://codecov.io/gh/fidelisrafael/esperanto-analyzer-react)
 
 ---
 
 ## About
 
 This React application is the front-end for the Python library [esperanto-analyzer](https://github.com/fidelisrafael/esperanto-analyzer).
+
+> **OBS**: This is the first experimental version and may contain many errors, if you want you can contribute sending a PR \o/
 
 You can try the demo at: https://fidelisrafael.github.io/esperanto-analyzer-react/
 
