@@ -30,22 +30,14 @@ export const NoResultsFoundView = () => (
 )
 
 class SentenceAnalyzeResult extends Component {
-
   renderWords(words) {
-    const wordsToRender = []
-
-    for (var i = 0; i < words.length; i++) {
-      const current = words[i]
-      const word = <InlineWord
-                      key={i}
-                      grammarClass={current['value']}
-                      content={current['word']}
-                    />
-
-      wordsToRender.push(word)
-    }
-
-    return wordsToRender
+    return words.map((word, index) => (
+      <InlineWord
+        key={index}
+        grammarClass={word['value']}
+        content={word['word']}
+      />
+    ))
   }
 
   render() {
