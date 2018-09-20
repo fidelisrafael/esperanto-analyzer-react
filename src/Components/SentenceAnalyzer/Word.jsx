@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
+
 import Tag from '@atlaskit/tag';
 import InlineDialog from '@atlaskit/inline-dialog';
 
-const styles = {
+export const STYLES = {
   word: {
     padding: '5px',
   }
 }
 
-const COLOR_BY_GRAMMAR_CLASS = {
+export const COLOR_BY_GRAMMAR_CLASS = {
   'adjective': 'green',
   'adverb': 'blue',
   'article': 'redLight',
@@ -19,11 +20,21 @@ const COLOR_BY_GRAMMAR_CLASS = {
   'noun': 'purpleLight',
   'numeral': 'blueLight',
   'verb': 'yellow',
-  'undefined': 'grey'
+  'undefined': 'grey',
 }
 
+// Most basic representation of Word
+const Word = ({ content, grammarClass = ''}) => (
+  <Tag
+    text={content}
+    color={COLOR_BY_GRAMMAR_CLASS[grammarClass.toLowerCase()] || 'standard'}
+    style={STYLES.word}
+  />
+)
 
-class Word extends Component {
+
+// Word with `state` and on top of Atlaskit `<InlineDialog />`
+class InlineWord extends Component {
   constructor() {
     super()
     this.state = {
@@ -31,37 +42,30 @@ class Word extends Component {
     }
   }
 
+  toggleDialogOpen() {
+    this.setState({dialogIsOpen: !this.state.dialogIsOpen})
+  }
+
   render() {
-    const {
-      grammarClass = '',
-      content = '',
-      placement = 'bottom-start'
-    } = this.props
+    const { content, grammarClass, placement = 'bottom-start' } = this.props
 
     return (
       <InlineDialog
         isOpen={this.state.dialogIsOpen}
         placement={placement}
         content={grammarClass}
-        onContentClick={() => {
-          this.setState({ dialogIsOpen: !this.state.dialogIsOpen });
-        }}
+        onContentClick={this.toggleDialogOpen.bind(this)}
       >
         <span
-          onClick={() => {
-            this.setState({dialogIsOpen: !this.state.dialogIsOpen})
-          }}
+          onClick={this.toggleDialogOpen.bind(this)}
           className='wordSpan'
         >
-          <Tag
-            text={content}
-            color={COLOR_BY_GRAMMAR_CLASS[grammarClass.toLowerCase()] || 'standard'}
-            style={styles.word}
-          />
+          <Word content={content} grammarClass={grammarClass} />
         </span>
       </InlineDialog>
     )
   }
+
 }
 
-export default Word;
+export { InlineWord, Word }

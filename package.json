@@ -26,12 +26,19 @@
     "react-scripts": "1.1.5",
     "styled-components": "^3.4.5"
   },
+  "jest": {
+    "coverageReporters": [
+      "html",
+      "json",
+      "cobertura"
+    ]
+  },
   "scripts": {
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
+    "test": "react-scripts test --env=jsdom --coverage --coverageDirectory=coverage/",
     "eject": "react-scripts eject"
   }
 }

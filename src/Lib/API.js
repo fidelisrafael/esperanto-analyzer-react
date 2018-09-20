@@ -8,10 +8,9 @@ const API_PROTOCOL = currentConfig.api_protocol
 const ANALYZE_ENDPOINT = '/analyze?sentence=:sentence'
 const API_URL =  `${API_PROTOCOL}://${API_HOST}`
 
-const DEFAULT_HEADERS = {
+export const DEFAULT_HEADERS = {
   'Content-Type': 'text/html'
 }
-
 
 class API {
   static analyzeSentence(sentence) {
@@ -30,7 +29,7 @@ class API {
     return this.request(path, { ...options, method: 'GET' })
   }
 
-  static post(path, data, options = {}) {
+  static post(path, options = {}) {
     return this.request(path, { ...options, method: 'POST' })
   }
 }
