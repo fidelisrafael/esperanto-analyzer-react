@@ -1,16 +1,10 @@
 import API, { DEFAULT_HEADERS } from './API'
 
 describe('API', () => {
-    beforeEach(function() {
-        global.fetch = jest.fn().mockImplementation(() => {
-            return new Promise((resolve, _reject) => {
-              resolve({
-                json: function() { 
-                  return [{'word': 'Mi', 'value': 'pronoun'}]
-                }
-              })
-            })
-        }); 
+    beforeEach(() => {
+        global.fetch = jest.fn().mockImplementation(() => (
+            Promise.resolve()
+        ));
     });
 
     describe('#request', () => {
@@ -50,7 +44,7 @@ describe('API', () => {
             API.get('/endpoint', { hello: 'world', ping: 'pong'}) // dispatch the request
 
             expect(API.request.mock.calls[0][1].hello).toEqual('world')
-            expect(API.request.mock.calls[0][1].ping).toEqual('pong')            
+            expect(API.request.mock.calls[0][1].ping).toEqual('pong')
         })
     })
 
@@ -69,20 +63,28 @@ describe('API', () => {
             API.post('/post_endpoint', { hello: 'world', ping: 'pong'}) // dispatch the request
 
             expect(API.request.mock.calls[0][1].hello).toEqual('world')
-            expect(API.request.mock.calls[0][1].ping).toEqual('pong')            
+            expect(API.request.mock.calls[0][1].ping).toEqual('pong')
         })
     })
 
     describe('#analyzeSentence', () => {
+        const requestMockImplementation = jest.fn().mockImplementation(() => (
+            Promise.resolve({
+                json: () => (
+                    Promise.resolve([{'word': 'Mi', 'value': 'pronoun'}])
+                )
+            })
+        ));
+
         it("Should call `request` with `method: 'GET'", () => {
-            API.request = jest.fn() // mock the current implementation
+            API.request = requestMockImplementation // mock the current implementation
             API.analyzeSentence('Mia')
 
             expect(API.request.mock.calls[0][1].method).toEqual('GET')
         })
 
         it("Should call the proper endpoint in remote API", () => {
-            API.request = jest.fn() // mock the current implementation
+            API.request = requestMockImplementation // mock the current implementation
             API.analyzeSentence('Mia')
 
             expect(API.request.mock.calls[0][0]).toEqual('/analyze?sentence=Mia')

@@ -323,7 +323,7 @@ describe('<PageHome />', () => {
       mountComponent((home, next) => {
         API.analyzeSentence = jest.fn((sentence) => {
           return new Promise((resolve, error) => {
-            process.nextTick(() => resolve({ json: () => (SAMPLE_SENTENCE_JSON_RESPONSE) }))
+            process.nextTick(() => resolve(SAMPLE_SENTENCE_JSON_RESPONSE))
           })
         })
 
