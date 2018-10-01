@@ -3,7 +3,6 @@ const defaultConfig = {
   api_protocol: 'http'
 }
 
-const developmentConfig = {...defaultConfig}
 const testConfig = {...defaultConfig}
 
 const productionConfig = {
@@ -11,8 +10,10 @@ const productionConfig = {
   api_protocol: 'https'
 }
 
+const developmentConfig = {...productionConfig}
+
 export default {
-  development: productionConfig,
+  development: developmentConfig,
   production: productionConfig,
   test: testConfig
 }
