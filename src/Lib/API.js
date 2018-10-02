@@ -16,7 +16,14 @@ class API {
   static analyzeSentence(sentence) {
     const endpoint = ANALYZE_ENDPOINT.replace(':sentence', sentence)
 
-    return this.get(endpoint)
+    return this.get(endpoint).then(response => {
+      if (response.ok) {
+        return response.json().then(response => (response));
+      }
+
+      return response.json().then(error => ({ error }));
+    })
+
   }
 
   static request(path, options = {}) {

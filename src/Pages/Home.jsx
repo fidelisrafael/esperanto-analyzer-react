@@ -93,7 +93,7 @@ class PageHome extends Component {
   }
 
   analyzeSentenceAPIRequest(sentence, callback=((json) => (json))) {
-    return API.analyzeSentence(sentence).then((response) => (callback(response.json())))
+    return API.analyzeSentence(sentence).then((response) => (callback(response)))
   }
 
   render() {
