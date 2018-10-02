@@ -36,17 +36,17 @@ $ git clone https://github.com/fidelisrafael/esperanto-analyzer-react
 $ cd esperanto-analyzer-react
 $ yarn install
 $ yarn start
-``` 
+```
 
 The application will run at `http://localhost:3000`
 
-**OBS**: If you're not hosting the Python WEB API at port `5000` you will probably want to use the
-Heroku hosted API, for this update `src/Config.js` and set `developmentConfig` as follow:
+**OBS**: By default for developing environment the Web API is hosted at Heroku.
+If you'd like to use a local Web API, you have to change `developmentConfig` at `src/Config.js` file as follow:
 
 ```js
 const developmentConfig = {
-  api_host: 'esperanto-analyzer-api.herokuapp.com',
-  api_protocol: 'https'
+  api_host: '127.0.0.1:5000',
+  api_protocol: 'http'
 }
 ```
 

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Button from '@atlaskit/button';
 import EditFilledIcon from '@atlaskit/icon/glyph/edit-filled';
-import TestUtils from '../../Lib/TestUtils'
 import { InlineWord } from './Word'
 
 export const STYLES = {
